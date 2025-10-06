@@ -24,21 +24,27 @@ struct EstimateTableView: View {
                             Image(systemName: "arrowshape.right.fill")
                                 .foregroundColor(Color(.blue))
 
-                            if data.backupID.isEmpty == true {
+                            if data.backupID.isEmpty {
                                 Text("Synchronize ID")
                                     .foregroundColor(color(uuid: data.id))
                             } else {
                                 Text(data.backupID)
                                     .foregroundColor(color(uuid: data.id))
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
+                                    .frame(maxWidth: 200, alignment: .leading)
                             }
                         }
                     } else {
-                        if data.backupID.isEmpty == true {
+                        if data.backupID.isEmpty {
                             Text("Synchronize ID")
                                 .foregroundColor(color(uuid: data.id))
                         } else {
                             Text(data.backupID)
                                 .foregroundColor(color(uuid: data.id))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .frame(maxWidth: 200, alignment: .leading)
                         }
                     }
                 }
