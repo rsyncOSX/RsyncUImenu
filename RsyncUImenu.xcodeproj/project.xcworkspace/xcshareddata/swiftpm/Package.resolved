@@ -1,0 +1,33 @@
+{
+  "originHash" : "5dd70426d3f88ed9cc9667287907ee1b0807aa25250e34dfabdc1106625d19a2",
+  "pins" : [
+    {
+      "identity" : "decodeencodegeneric",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rsyncOSX/DecodeEncodeGeneric.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f5aefa925874d4d50aafc9e118a083cdc8d4b021"
+      }
+    },
+    {
+      "identity" : "parsersyncoutput",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rsyncOSX/ParseRsyncOutput",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c7a5a2d0bab353597b3a337835db6759785b4b6c"
+      }
+    },
+    {
+      "identity" : "rsyncarguments",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rsyncOSX/RsyncArguments.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b9aa8c630a2e6f53729981298acadb0dc4fbb427"
+      }
+    }
+  ],
+  "version" : 3
+}

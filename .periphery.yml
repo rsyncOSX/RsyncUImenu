@@ -1,0 +1,4 @@
+project: RsyncUI_menu.xcodeproj
+retain_public: true
+schemes:
+- RsyncUI_menu
