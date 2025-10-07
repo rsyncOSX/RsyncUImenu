@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ConfigurationsTableDataMainView: View {
+    
     @Environment(\.colorScheme) var colorScheme
 
     @Bindable var rsyncUIdata: RsyncUIconfigurations
     @Binding var selecteduuids: Set<SynchronizeConfiguration.ID>
-    @Binding var filterstring: String
     @Binding var progress: Double
 
     let progressdetails: ProgressDetails
@@ -20,9 +20,7 @@ struct ConfigurationsTableDataMainView: View {
     let synchronizatioofdatainprogress: Bool
 
     var body: some View {
-        List(configurations.filter {
-            filterstring.isEmpty ? true : $0.backupID.contains(filterstring)
-        }, selection: $selecteduuids) { data in
+        List(configurations, selection: $selecteduuids) { data in
             HStack(spacing: 12) {
                 if synchronizatioofdatainprogress {
                     // Progress section

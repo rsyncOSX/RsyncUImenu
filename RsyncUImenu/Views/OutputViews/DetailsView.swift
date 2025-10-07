@@ -11,6 +11,7 @@ struct DetailsView: View {
     @Environment(\.dismiss) var dismiss
 
     let remotedatanumbers: RemoteDataNumbers
+    let fromsummarizeddetailsview: Bool
 
     var body: some View {
         HStack {
@@ -51,11 +52,14 @@ struct DetailsView: View {
                             .padding()
                     }
                     
-                    Button("Dismiss") {
-                        dismiss()
+                    if fromsummarizeddetailsview {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "return")
+                        }
+                        .help("Return")
                     }
-                    .buttonStyle(ColorfulButtonStyle())
-                    
                 }
             }
 

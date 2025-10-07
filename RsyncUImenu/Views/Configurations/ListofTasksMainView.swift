@@ -15,32 +15,26 @@ struct ListofTasksMainView: View {
     @Binding var progress: Double
 
     @State private var confirmdelete: Bool = false
-    // Filterstring
-    @State private var filterstring: String = ""
-
+   
     let progressdetails: ProgressDetails
     let max: Double
 
     var body: some View {
         ConfigurationsTableDataMainView(rsyncUIdata: rsyncUIdata,
                                         selecteduuids: $selecteduuids,
-                                        filterstring: $filterstring,
                                         progress: $progress,
                                         progressdetails: progressdetails,
                                         max: max,
                                         synchronizatioofdatainprogress: max > 0)
             .overlay {
-                if (rsyncUIdata.configurations ?? []).filter(
-                    { filterstring.isEmpty ? true : $0.backupID.contains(filterstring) }).isEmpty
-                {
+                if ((rsyncUIdata.configurations ?? []).isEmpty) {
                     ContentUnavailableView {
                         Label("There are no tasks by this Synchronize ID", systemImage: "doc.richtext.fill")
                     } description: {
-                        Text("Try to search for other filter in Synchronize ID or \n If new user, add Tasks")
+                        Text("Try to search for other filter in Synchronize ID or \n If new user, add open RsyncUI and add task")
                     }
                 }
             }
-            .searchable(text: $filterstring)
             .confirmationDialog(selecteduuids.count == 1 ? "Delete 1 configuration" :
                 "Delete \(selecteduuids.count) configurations",
                 isPresented: $confirmdelete)
@@ -58,21 +52,6 @@ struct ListofTasksMainView: View {
             }
             .onDeleteCommand {
                 confirmdelete = true
-            }
-            .onChange(of: filterstring) {
-                Task {
-                    try await Task.sleep(seconds: 2)
-                    if let filteredconfigurations = rsyncUIdata.configurations?.filter({ filterstring.isEmpty ? true : $0.backupID.contains(filterstring) }) {
-                        guard filterstring.isEmpty == false else {
-                            // selecteduuids.removeAll()
-                            return
-                        }
-
-                        _ = filteredconfigurations.map { configuration in
-                            selecteduuids.insert(configuration.id)
-                        }
-                    }
-                }
             }
     }
 
