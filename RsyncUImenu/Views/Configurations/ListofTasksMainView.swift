@@ -29,9 +29,9 @@ struct ListofTasksMainView: View {
             .overlay {
                 if ((rsyncUIdata.configurations ?? []).isEmpty) {
                     ContentUnavailableView {
-                        Label("There are no tasks by this Synchronize ID", systemImage: "doc.richtext.fill")
+                        Label("There are no tasks", systemImage: "doc.richtext.fill")
                     } description: {
-                        Text("Try to search for other filter in Synchronize ID or \n If new user, add open RsyncUI and add task")
+                        Text("Use RsyncUI to add tasks")
                     }
                 }
             }
