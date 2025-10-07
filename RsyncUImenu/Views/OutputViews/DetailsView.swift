@@ -16,38 +16,21 @@ struct DetailsView: View {
         HStack {
             VStack(alignment: .leading) {
                 
-                HStack {
-                    
-                    DetailsViewHeading(remotedatanumbers: remotedatanumbers)
-                    
-                    Button("Dismiss") {
-                        dismiss()
-                    }
-                    .buttonStyle(ColorfulButtonStyle())
-                }
+                DetailsViewHeading(remotedatanumbers: remotedatanumbers)
                 
                 Spacer()
 
-                if remotedatanumbers.datatosynchronize {
-                    VStack(alignment: .leading) {
-                        if SharedReference.shared.rsyncversion3 {
-                            Text(remotedatanumbers.newfiles_Int == 1 ? "1 new file" : "\(remotedatanumbers.newfiles_Int) new files")
-                            Text(remotedatanumbers.deletefiles_Int == 1 ? "1 file for delete" : "\(remotedatanumbers.deletefiles_Int) files for delete")
+                HStack {
+                    
+                    if remotedatanumbers.datatosynchronize {
+                        VStack(alignment: .leading) {
+                            if SharedReference.shared.rsyncversion3 {
+                                Text(remotedatanumbers.newfiles_Int == 1 ? "1 new file" : "\(remotedatanumbers.newfiles_Int) new files")
+                                Text(remotedatanumbers.deletefiles_Int == 1 ? "1 file for delete" : "\(remotedatanumbers.deletefiles_Int) files for delete")
+                            }
+                            Text(remotedatanumbers.filestransferred_Int == 1 ? "1 file changed" : "\(remotedatanumbers.filestransferred_Int) files changed")
+                            Text(remotedatanumbers.totaltransferredfilessize_Int == 1 ? "byte for transfer" : "\(remotedatanumbers.totaltransferredfilessize_Int) bytes for transfer")
                         }
-                        Text(remotedatanumbers.filestransferred_Int == 1 ? "1 file changed" : "\(remotedatanumbers.filestransferred_Int) files changed")
-                        Text(remotedatanumbers.totaltransferredfilessize_Int == 1 ? "byte for transfer" : "\(remotedatanumbers.totaltransferredfilessize_Int) bytes for transfer")
-                    }
-                    .padding()
-                    .foregroundStyle(.white)
-                    .background {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(.blue.gradient)
-                    }
-                    .padding()
-
-                } else {
-                    Text("No data to synchronize")
-                        .font(.title2)
                         .padding()
                         .foregroundStyle(.white)
                         .background {
@@ -55,6 +38,24 @@ struct DetailsView: View {
                                 .fill(.blue.gradient)
                         }
                         .padding()
+
+                    } else {
+                        Text("No data to synchronize")
+                            .font(.title2)
+                            .padding()
+                            .foregroundStyle(.white)
+                            .background {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.blue.gradient)
+                            }
+                            .padding()
+                    }
+                    
+                    Button("Dismiss") {
+                        dismiss()
+                    }
+                    .buttonStyle(ColorfulButtonStyle())
+                    
                 }
             }
 
