@@ -91,6 +91,7 @@ struct SummarizedDetailsView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .frame(maxWidth: .infinity)
             .onChange(of: selecteduuids) {
+                guard selecteduuids.count == 1 else { return }
                 showdetails = true
             }
             .onAppear {

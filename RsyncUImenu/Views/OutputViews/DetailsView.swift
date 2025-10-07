@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DetailsView: View {
+    
     @Environment(\.dismiss) var dismiss
 
     let remotedatanumbers: RemoteDataNumbers

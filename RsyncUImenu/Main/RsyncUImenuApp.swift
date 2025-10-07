@@ -22,8 +22,7 @@ struct YourApp: App {
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     var statusItem: NSStatusItem?
-    var popover: NSPopover?
-    var detachedWindow: NSWindow?
+    var mainWindow: NSWindow?
 
     func applicationDidFinishLaunching(_: Notification) {
         // Create the status item in the menu bar
@@ -35,37 +34,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             let config = NSImage.SymbolConfiguration(paletteColors: [darkRed])
             button.image = image?.withSymbolConfiguration(config)
             button.image?.isTemplate = false
-            button.action = #selector(togglePopover)
+            button.action = #selector(toggleWindow)
         }
-        // Create the popover
-        popover = NSPopover()
-        popover?.contentSize = NSSize(width: 800, height: 380)
-        popover?.behavior = .transient
-        popover?.contentViewController = NSHostingController(rootView: ContentView(onDetach: detachPopover))
+        
+        // Create the detached window immediately
+        createWindow()
     }
 
-    @objc func togglePopover() {
-        if let button = statusItem?.button {
-            if let popover {
-                if popover.isShown {
-                    popover.performClose(nil)
-                } else {
-                    // Only show popover if window is not detached
-                    if detachedWindow == nil {
-                        popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-                    } else {
-                        // If already detached, just bring window to front
-                        detachedWindow?.makeKeyAndOrderFront(nil)
-                    }
-                }
-            }
-        }
-    }
-
-    func detachPopover() {
-        // Close the popover
-        popover?.performClose(nil)
-
+    func createWindow() {
         // Create a new window
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 800, height: 380),
@@ -77,20 +53,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         window.title = "RsyncUI"
         window.center()
         window.isReleasedWhenClosed = false
-        window.contentViewController = NSHostingController(rootView: ContentView(onDetach: nil))
+        window.contentViewController = NSHostingController(rootView: ContentView())
 
         // Set delegate before showing window
         window.delegate = self
-        detachedWindow = window
+        mainWindow = window
 
         window.makeKeyAndOrderFront(nil)
+    }
+
+    @objc func toggleWindow() {
+        if let window = mainWindow {
+            if window.isVisible {
+                window.orderOut(nil)
+            } else {
+                window.makeKeyAndOrderFront(nil)
+            }
+        } else {
+            createWindow()
+        }
     }
 
     @MainActor
     @objc func windowWillClose(_ notification: Notification) {
         Task { @MainActor in
-            if let window = notification.object as? NSWindow, window == detachedWindow {
-                detachedWindow = nil
+            if let window = notification.object as? NSWindow, window == mainWindow {
+                // Hide window instead of destroying it
+                window.orderOut(nil)
             }
         }
     }
@@ -99,28 +88,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 struct ContentView: View {
     @State var executetaskpath: [Tasks] = []
     @State private var showabout: Bool = false
-    var onDetach: (() -> Void)?
 
     var body: some View {
         VStack(spacing: 0) {
             // Custom header bar
-
             if executetaskpath.count == 0 {
                 HStack {
                     Text("RsyncUI")
                         .font(.headline)
                     Spacer()
-
-                    // Show detach button only if we can detach (onDetach is not nil)
-                    if onDetach != nil {
-                        Button(action: {
-                            onDetach?()
-                        }) {
-                            Image(systemName: "arrow.up.right")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .help("Detach to window")
-                    }
 
                     Button("About") {
                         showabout = true
