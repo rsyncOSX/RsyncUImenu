@@ -42,17 +42,20 @@ struct SidebarTasksView: View {
                             .font(.title2)
                     }
                     .buttonStyle(.plain)
+                    .padding(5)
 
                     Spacer()
 
                     Text(navigationTitle(for: currentTask))
                         .font(.headline)
+                        .padding(5)
 
                     Spacer()
                 }
                 .background(Color(NSColor.controlBackgroundColor))
-
-                Divider()
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .padding(.horizontal, 5)
+                .padding(.vertical, 5)
             }
 
             // Show current view based on navigation path
