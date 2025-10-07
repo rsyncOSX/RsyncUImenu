@@ -16,6 +16,7 @@ struct DetailsView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
+                
                 DetailsViewHeading(remotedatanumbers: remotedatanumbers)
 
                 Spacer()
@@ -36,7 +37,6 @@ struct DetailsView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(.blue.gradient)
                         }
-                        .padding()
 
                     } else {
                         Text("No data to synchronize")
@@ -47,7 +47,6 @@ struct DetailsView: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .fill(.blue.gradient)
                             }
-                            .padding()
                     }
 
                     if fromsummarizeddetailsview {
