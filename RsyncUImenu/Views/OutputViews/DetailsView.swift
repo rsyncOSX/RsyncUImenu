@@ -57,6 +57,7 @@ struct DetailsView: View {
                             Image(systemName: "return")
                         }
                         .help("Return")
+                        .buttonStyle(.borderedProminent)
                     }
                 }
             }

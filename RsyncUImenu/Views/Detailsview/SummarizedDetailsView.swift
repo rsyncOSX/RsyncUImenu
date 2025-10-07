@@ -15,6 +15,7 @@ struct SummarizedDetailsView: View {
     @Binding var executetaskpath: [Tasks]
 
     @State private var isPresentingConfirm: Bool = false
+    @State private var showdetails: Bool = false
 
     let configurations: [SynchronizeConfiguration]
     let profile: String?
@@ -42,17 +43,9 @@ struct SummarizedDetailsView: View {
                 } else {
                     ZStack {
                         HStack {
-                            if selecteduuids.count == 1 {
-                                if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
-                                    if estimates.count == 1 {
-                                        DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: true)
-                                    }
-                                }
-                            } else {
-                                leftcolumndetails
+                            leftcolumndetails
 
-                                rightcolumndetails
-                            }
+                            rightcolumndetails
                         }
 
                         if datatosynchronize, selecteduuids.count == 0 {
@@ -93,13 +86,15 @@ struct SummarizedDetailsView: View {
                                 }
                                 .help("Synchronize (⌘R)")
                                 .buttonStyle(.borderedProminent)
-                                // .buttonStyle(ColorfulButtonStyle())
                             }
                         }
                     }
                 }
             }
             .frame(maxWidth: .infinity)
+            .onChange(of: selecteduuids) {
+                showdetails = true
+            }
             .onAppear {
                 Logger.process.info("SummarizedDetailsView: ONAPPEAR")
                 guard progressdetails.estimatealltasksinprogress == false else {
@@ -112,8 +107,14 @@ struct SummarizedDetailsView: View {
                 }
             }
         }
-
-        Spacer()
+        .sheet(isPresented: $showdetails) {
+            if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
+                if estimates.count == 1 {
+                    DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: true)
+                        .frame(width: 800, height: 400)
+                }
+            }
+        }
     }
 
     var datatosynchronize: Bool {

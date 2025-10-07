@@ -113,9 +113,9 @@ struct ContentView: View {
                         Button(action: {
                             onDetach?()
                         }) {
-                            Image(systemName: "arrow.up.right.square")
+                            Image(systemName: "arrow.up.right")
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.borderedProminent)
                         .help("Detach to window")
                     }
 
