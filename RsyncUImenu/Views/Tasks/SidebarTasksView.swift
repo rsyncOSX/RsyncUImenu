@@ -50,8 +50,6 @@ struct SidebarTasksView: View {
 
                     Spacer()
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
                 .background(Color(NSColor.controlBackgroundColor))
 
                 Divider()

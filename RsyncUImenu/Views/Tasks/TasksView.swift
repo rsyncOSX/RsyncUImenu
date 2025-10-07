@@ -77,6 +77,7 @@ struct TasksView: View {
                     thereareestimates = true
                 }
             }
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
             if doubleclick { doubleclickaction }
         }
@@ -93,7 +94,7 @@ struct TasksView: View {
                 }
             }
             .frame(width: 180)
-            .padding([.bottom, .top, .trailing], 7)
+            // .padding([.bottom, .top, .trailing], 7)
             .disabled(selectprofiles)
 
             Button {
@@ -181,7 +182,6 @@ struct TasksView: View {
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
-            .padding()
         }
         .navigationTitle("Synchronize: profile \(rsyncUIdata.profile ?? "Default")")
     }

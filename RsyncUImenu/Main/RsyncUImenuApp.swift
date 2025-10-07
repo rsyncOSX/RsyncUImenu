@@ -30,10 +30,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "cloud.fill", accessibilityDescription: "Menu Bar App")
+            let image = NSImage(systemSymbolName: "cloud.fill", accessibilityDescription: "Menu Bar App")
+            let darkRed = NSColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            let config = NSImage.SymbolConfiguration(paletteColors: [darkRed])
+            button.image = image?.withSymbolConfiguration(config)
+            button.image?.isTemplate = false
             button.action = #selector(togglePopover)
         }
-
         // Create the popover
         popover = NSPopover()
         popover?.contentSize = NSSize(width: 800, height: 400)
@@ -126,8 +129,8 @@ struct ContentView: View {
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
-
-                Divider()
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .frame(width: 790, height: 40)
             }
 
             // Main content
