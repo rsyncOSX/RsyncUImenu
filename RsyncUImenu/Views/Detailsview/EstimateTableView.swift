@@ -30,9 +30,6 @@ struct EstimateTableView: View {
                             } else {
                                 Text(data.backupID)
                                     .foregroundColor(color(uuid: data.id))
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
-                                    .frame(maxWidth: 200, alignment: .leading)
                             }
                         }
                     } else {
@@ -42,13 +39,12 @@ struct EstimateTableView: View {
                         } else {
                             Text(data.backupID)
                                 .foregroundColor(color(uuid: data.id))
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-                                .frame(maxWidth: 200, alignment: .leading)
                         }
                     }
                 }
-                .frame(minWidth: 50, maxWidth: 150, alignment: .leading)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: 200, alignment: .leading)
 
                 Spacer()
 

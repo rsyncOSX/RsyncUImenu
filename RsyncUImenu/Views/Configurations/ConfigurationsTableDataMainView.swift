@@ -60,7 +60,9 @@ struct ConfigurationsTableDataMainView: View {
                         Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
                     }
                 }
-                .frame(width: 150, alignment: .leading)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: 200, alignment: .leading)
 
                 // Action section
                 Group {

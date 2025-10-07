@@ -143,7 +143,9 @@ struct SummarizedDetailsView: View {
                         }
                     }
                 }
-                .frame(minWidth: 200, maxWidth: 250, alignment: .leading)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: 200, alignment: .leading)
 
                 // Source folder
                 Text(data.localCatalog)
