@@ -16,7 +16,7 @@ struct SidebarMainView: View {
     @Binding var selectedprofileID: ProfilesnamesRecord.ID?
     @Bindable var errorhandling: AlertError
     @Binding var executetaskpath: [Tasks]
-    
+
     @State private var progressdetails = ProgressDetails()
     @State private var selecteduuids = Set<SynchronizeConfiguration.ID>()
 

@@ -42,7 +42,6 @@ struct SummarizedDetailsView: View {
                 } else {
                     ZStack {
                         HStack {
-                            
                             if selecteduuids.count == 1 {
                                 if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
                                     if estimates.count == 1 {
@@ -56,7 +55,7 @@ struct SummarizedDetailsView: View {
                             }
                         }
 
-                        if datatosynchronize && selecteduuids.count == 0 {
+                        if datatosynchronize, selecteduuids.count == 0 {
                             if SharedReference.shared.confirmexecute {
                                 Button {
                                     isPresentingConfirm = progressdetails.confirmexecutetasks()

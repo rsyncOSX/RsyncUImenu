@@ -15,7 +15,7 @@ struct ListofTasksMainView: View {
     @Binding var progress: Double
 
     @State private var confirmdelete: Bool = false
-   
+
     let progressdetails: ProgressDetails
     let max: Double
 
@@ -27,7 +27,7 @@ struct ListofTasksMainView: View {
                                         max: max,
                                         synchronizatioofdatainprogress: max > 0)
             .overlay {
-                if ((rsyncUIdata.configurations ?? []).isEmpty) {
+                if (rsyncUIdata.configurations ?? []).isEmpty {
                     ContentUnavailableView {
                         Label("There are no tasks", systemImage: "doc.richtext.fill")
                     } description: {

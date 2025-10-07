@@ -101,7 +101,7 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Custom header bar
-            
+
             if executetaskpath.count == 0 {
                 HStack {
                     Text("RsyncUI")
@@ -128,9 +128,8 @@ struct ContentView: View {
                 .background(Color(NSColor.controlBackgroundColor))
 
                 Divider()
-
             }
-            
+
             // Main content
             RsyncUImenuView(executetaskpath: $executetaskpath)
                 .sheet(isPresented: $showabout) {

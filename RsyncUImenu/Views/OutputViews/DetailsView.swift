@@ -16,13 +16,11 @@ struct DetailsView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                
                 DetailsViewHeading(remotedatanumbers: remotedatanumbers)
-                
+
                 Spacer()
 
                 HStack {
-                    
                     if remotedatanumbers.datatosynchronize {
                         VStack(alignment: .leading) {
                             if SharedReference.shared.rsyncversion3 {
@@ -51,7 +49,7 @@ struct DetailsView: View {
                             }
                             .padding()
                     }
-                    
+
                     if fromsummarizeddetailsview {
                         Button {
                             dismiss()

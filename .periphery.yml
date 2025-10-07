@@ -1,4 +1,7 @@
-project: RsyncUI_menu.xcodeproj
+project: RsyncUImenu.xcodeproj
 retain_public: true
 schemes:
-- RsyncUI_menu
+- RsyncUImenu
+index_exclude:
+- RsyncUImenu/Model/Utils/yudpsocket/ytcpsocket.swift
+- RsyncUImenu/Model/Utils/extensions.swift
