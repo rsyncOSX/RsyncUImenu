@@ -42,12 +42,21 @@ struct SummarizedDetailsView: View {
                 } else {
                     ZStack {
                         HStack {
-                            leftcolumndetails
+                            
+                            if selecteduuids.count == 1 {
+                                if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
+                                    if estimates.count == 1 {
+                                        DetailsView(remotedatanumbers: estimates[0])
+                                    }
+                                }
+                            } else {
+                                leftcolumndetails
 
-                            rightcolumndetails
+                                rightcolumndetails
+                            }
                         }
 
-                        if datatosynchronize {
+                        if datatosynchronize && selecteduuids.count == 0 {
                             if SharedReference.shared.confirmexecute {
                                 Button {
                                     isPresentingConfirm = progressdetails.confirmexecutetasks()
@@ -161,16 +170,6 @@ struct SummarizedDetailsView: View {
             }
             .padding(.vertical, -4)
         }
-        .onAppear {
-            if selecteduuids.count > 0 {
-                // Reset preselected tasks, must do a few seconds timout
-                // before clearing it out
-                Task {
-                    try await Task.sleep(seconds: 2)
-                    selecteduuids.removeAll()
-                }
-            }
-        }
     }
 
     var rightcolumndetails: some View {
@@ -213,10 +212,6 @@ struct SummarizedDetailsView: View {
                 Spacer()
             }
             .padding(.vertical, -4)
-        }
-        .onChange(of: selecteduuids) {
-            guard selecteduuids.count > 0 else { return }
-            executetaskpath.append(Tasks(task: .dryrunonetaskalreadyestimated))
         }
     }
 }

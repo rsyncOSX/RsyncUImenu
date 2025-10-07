@@ -8,13 +8,24 @@
 import SwiftUI
 
 struct DetailsView: View {
+    @Environment(\.dismiss) var dismiss
+
     let remotedatanumbers: RemoteDataNumbers
 
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                DetailsViewHeading(remotedatanumbers: remotedatanumbers)
-
+                
+                HStack {
+                    
+                    DetailsViewHeading(remotedatanumbers: remotedatanumbers)
+                    
+                    Button("Dismiss") {
+                        dismiss()
+                    }
+                    .buttonStyle(ColorfulButtonStyle())
+                }
+                
                 Spacer()
 
                 if remotedatanumbers.datatosynchronize {
