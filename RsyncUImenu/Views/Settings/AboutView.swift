@@ -33,7 +33,7 @@ struct AboutView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("RsyncUI menu-app")
+            Section(header: Text("RsyncUI menu app")
                 .font(.title3)
                 .fontWeight(.bold))
             {
