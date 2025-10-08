@@ -63,25 +63,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     @objc func toggleWindow() {
-        if let window = mainWindow {
-            if window.isVisible {
-                window.orderOut(nil)
-            } else {
-                window.makeKeyAndOrderFront(nil)
-            }
-        } else {
+        guard let window = mainWindow else {
             createWindow()
+            return
+        }
+        
+        if window.isVisible {
+            window.orderOut(nil)
+        } else {
+            // Ensure window is properly shown and activated
+            NSApp.activate(ignoringOtherApps: true)
+            window.makeKeyAndOrderFront(nil)
         }
     }
 
-    @MainActor
-    @objc func windowWillClose(_ notification: Notification) {
-        Task { @MainActor in
-            if let window = notification.object as? NSWindow, window == mainWindow {
-                // Hide window instead of destroying it
-                window.orderOut(nil)
-            }
-        }
+    // This is the key fix - return false to prevent actual closing
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        // Hide the window instead of closing it
+        sender.orderOut(nil)
+        return false
     }
 }
 
