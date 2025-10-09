@@ -161,6 +161,24 @@ struct TasksView: View {
                 }
             }
             .help("Reset estimates")
+            
+            Button {
+                guard selecteduuids.count > 0 else { return }
+                guard alltasksarehalted() == false else { return }
+
+                guard selecteduuids.count == 1 else {
+                    executetaskpath.append(Tasks(task: .summarizeddetailsview))
+                    return
+                }
+                if progressdetails.tasksareestimated(selecteduuids) {
+                    executetaskpath.append(Tasks(task: .dryrunonetaskalreadyestimated))
+                } else {
+                    executetaskpath.append(Tasks(task: .onetaskdetailsview))
+                }
+            } label: {
+                Image(systemName: "text.magnifyingglass")
+            }
+            .help("Rsync output estimated task")
 
             Button {
                 executetaskpath.append(Tasks(task: .viewlogfile))
