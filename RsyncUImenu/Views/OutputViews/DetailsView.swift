@@ -23,6 +23,7 @@ struct DetailsView: View {
                 Spacer()
 
                 HStack {
+                    
                     if remotedatanumbers.datatosynchronize {
                         VStack(alignment: .leading) {
                             if SharedReference.shared.rsyncversion3 {
@@ -35,7 +36,7 @@ struct DetailsView: View {
                         .padding()
                         .foregroundStyle(.white)
                         .background {
-                            RoundedRectangle(cornerRadius: 2)
+                            RoundedRectangle(cornerRadius: 8)
                                 .fill(.blue.gradient)
                         }
 
@@ -45,11 +46,11 @@ struct DetailsView: View {
                             .padding()
                             .foregroundStyle(.white)
                             .background {
-                                RoundedRectangle(cornerRadius: 2)
+                                RoundedRectangle(cornerRadius: 8)
                                     .fill(.blue.gradient)
                             }
                     }
-
+                    
                     if fromsummarizeddetailsview {
                         Button {
                             dismiss()
@@ -58,8 +59,10 @@ struct DetailsView: View {
                         }
                         .help("Return")
                         .buttonStyle(.borderedProminent)
+                        .padding()
                     }
                 }
+                .padding()
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -73,5 +76,6 @@ struct DetailsView: View {
                 }
             }
         }
+        .padding()
     }
 }

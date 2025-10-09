@@ -111,7 +111,7 @@ struct SummarizedDetailsView: View {
                 if estimates.count == 1 {
                     DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: true)
                         .frame(width: 800, height: 400)
-                        //.presentationDetents([.height(400)])
+                        .presentationDetents([.height(400)])
                         .presentationBackground(.ultraThinMaterial)
                         //.presentationCornerRadius(8)
                 }
