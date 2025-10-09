@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             button.image?.isTemplate = false
             button.action = #selector(toggleWindow)
         }
-        
+
         // Create the detached window immediately
         createWindow()
     }
@@ -67,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             createWindow()
             return
         }
-        
+
         if window.isVisible {
             window.orderOut(nil)
         } else {

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DetailsView: View {
-    
     @Environment(\.dismiss) var dismiss
 
     let remotedatanumbers: RemoteDataNumbers
@@ -17,13 +16,11 @@ struct DetailsView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                
                 DetailsViewHeading(remotedatanumbers: remotedatanumbers)
 
                 Spacer()
 
                 HStack {
-                    
                     if remotedatanumbers.datatosynchronize {
                         VStack(alignment: .leading) {
                             if SharedReference.shared.rsyncversion3 {
@@ -50,7 +47,7 @@ struct DetailsView: View {
                                     .fill(.blue.gradient)
                             }
                     }
-                    
+
                     if fromsummarizeddetailsview {
                         Button {
                             dismiss()

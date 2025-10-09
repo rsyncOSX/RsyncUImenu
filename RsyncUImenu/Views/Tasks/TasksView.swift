@@ -161,7 +161,7 @@ struct TasksView: View {
                 }
             }
             .help("Reset estimates")
-            
+
             Button {
                 guard selecteduuids.count > 0 else { return }
                 guard alltasksarehalted() == false else { return }

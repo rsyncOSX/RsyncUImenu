@@ -113,7 +113,7 @@ struct SummarizedDetailsView: View {
                         .frame(width: 800, height: 400)
                         .presentationDetents([.height(400)])
                         .presentationBackground(.ultraThinMaterial)
-                        //.presentationCornerRadius(8)
+                    // .presentationCornerRadius(8)
                 }
             }
         }
