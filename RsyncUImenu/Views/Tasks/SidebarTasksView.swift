@@ -53,7 +53,7 @@ struct SidebarTasksView: View {
                     Spacer()
                 }
                 .background(Color(NSColor.controlBackgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .padding(.horizontal, 5)
                 .padding(.vertical, 5)
             }

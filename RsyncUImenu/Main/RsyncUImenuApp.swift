@@ -105,7 +105,7 @@ struct ContentView: View {
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
                 .frame(width: 790, height: 40)
             }
 

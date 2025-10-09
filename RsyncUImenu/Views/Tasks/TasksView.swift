@@ -77,7 +77,7 @@ struct TasksView: View {
                     thereareestimates = true
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
 
             if doubleclick { doubleclickaction }
         }

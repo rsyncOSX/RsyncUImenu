@@ -35,7 +35,7 @@ struct DetailsView: View {
                         .padding()
                         .foregroundStyle(.white)
                         .background {
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 2)
                                 .fill(.blue.gradient)
                         }
 
@@ -45,7 +45,7 @@ struct DetailsView: View {
                             .padding()
                             .foregroundStyle(.white)
                             .background {
-                                RoundedRectangle(cornerRadius: 8)
+                                RoundedRectangle(cornerRadius: 2)
                                     .fill(.blue.gradient)
                             }
                     }

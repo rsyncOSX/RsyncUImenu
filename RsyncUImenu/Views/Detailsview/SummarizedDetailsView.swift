@@ -88,7 +88,7 @@ struct SummarizedDetailsView: View {
                     }
                 }
             }
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
             .frame(maxWidth: .infinity)
             .onChange(of: selecteduuids) {
                 guard selecteduuids.count == 1 else { return }
@@ -111,9 +111,9 @@ struct SummarizedDetailsView: View {
                 if estimates.count == 1 {
                     DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: true)
                         .frame(width: 800, height: 400)
-                        .presentationDetents([.height(400)])
+                        //.presentationDetents([.height(400)])
                         .presentationBackground(.ultraThinMaterial)
-                        .presentationCornerRadius(8)
+                        //.presentationCornerRadius(8)
                 }
             }
         }
