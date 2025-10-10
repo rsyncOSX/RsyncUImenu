@@ -19,90 +19,124 @@ struct ConfigurationsTableDataMainView: View {
     let synchronizatioofdatainprogress: Bool
 
     var body: some View {
-        List(configurations, selection: $selecteduuids) { data in
-            HStack(spacing: 12) {
-                if synchronizatioofdatainprogress {
-                    // Progress section
-                    if data.hiddenID == progressdetails.hiddenIDatwork, max > 0, progress <= max {
-                        HStack {
-                            ProgressView("", value: progress, total: max)
-                                .frame(width: 50)
-                            Text("\(Int(max)) : \(Int(progress))")
-                                .contentTransition(.numericText(countsDown: false))
-                                .animation(.default, value: progress)
-                        }
-                        .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
-                    } else {
-                        Spacer().frame(width: 150)
+        VStack {
+            // Column Headers
+                HStack(spacing: 12) {
+                    if synchronizatioofdatainprogress {
+                        Text("Progress")
+                            .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
+                            .font(.headline)
                     }
-                }
-
-                // Synchronize ID section
-                VStack(alignment: .leading) {
-                    if let index = progressdetails.estimatedlist?.firstIndex(where: { $0.id == data.id }) {
-                        if progressdetails.estimatedlist?[index].datatosynchronize == false,
-                           progressdetails.estimatedlist?[index].preparedoutputfromrsync?.count ?? 0 > SharedReference.shared.alerttagginglines
-                        {
-                            Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
-                                .foregroundColor(.yellow)
-                            Text(rsyncUIdata.profile ?? "Default")
-                                .foregroundColor(.yellow)
-                                .font(.caption)
-                        } else {
-                            let color: Color = progressdetails.estimatedlist?[index].datatosynchronize == true ? .blue : .red
-                            Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
-                                .foregroundColor(color)
-                        }
-                    } else {
-                        Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
-                    }
-                }
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .frame(maxWidth: 150, alignment: .leading)
-
-                // Action section
-                Group {
-                    if data.task == SharedReference.shared.halted {
-                        Image(systemName: "stop.fill")
-                            .foregroundColor(.red)
-                    } else {
-                        Text(data.task)
-                    }
-                }
-                .frame(width: 80)
-                .contextMenu {
-                    Button("Toggle halt task") {
-                        let index = getindex(selecteduuids)
-                        guard index != -1 else { return }
-                        updatehalted(index)
-                    }
-                }
-
-                // Source folder
-                Text(data.localCatalog)
-                    .frame(minWidth: 100, maxWidth: 200, alignment: .leading)
-                    .lineLimit(1)
-
-                // Server
-                Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
-                    .frame(width: 90)
-
-                // Time section
-                let seconds: Double = {
-                    if let date = data.dateRun {
-                        let lastbackup = date.en_date_from_string()
-                        return lastbackup.timeIntervalSinceNow * -1
-                    }
-                    return 0
-                }()
-                let color: Color = markconfig(seconds) == true ? .red : (colorScheme == .dark ? .white : .black)
-
-                Text(seconds.latest())
-                    .frame(width: 90, alignment: .trailing)
-                    .foregroundColor(color)
+                    
+                    Text("Synchronize ID")
+                        .frame(maxWidth: 150, alignment: .leading)
+                        .font(.headline)
+                    
+                    Text("Task")
+                        .frame(width: 80, alignment: .leading)
+                        .font(.headline)
+                    
+                    Text("Source folder")
+                        .frame(minWidth: 100, maxWidth: 200, alignment: .leading)
+                        .font(.headline)
+                    
+                    Text("Server")
+                        .frame(width: 90, alignment: .leading)
+                        .font(.headline)
+                    
+                    Text("Time")
+                        .frame(width: 90, alignment: .trailing)
+                        .font(.headline)
+                    
+                    Spacer()
             }
-            .padding(.vertical, -4)
+            .padding(.vertical, 4)
+            
+            List(configurations, selection: $selecteduuids) { data in
+                HStack(spacing: 12) {
+                    if synchronizatioofdatainprogress {
+                        // Progress section
+                        if data.hiddenID == progressdetails.hiddenIDatwork, max > 0, progress <= max {
+                            HStack {
+                                ProgressView("", value: progress, total: max)
+                                    .frame(width: 50)
+                                Text("\(Int(max)) : \(Int(progress))")
+                                    .contentTransition(.numericText(countsDown: false))
+                                    .animation(.default, value: progress)
+                            }
+                            .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
+                        } else {
+                            Spacer().frame(width: 150)
+                        }
+                    }
+
+                    // Synchronize ID section
+                    VStack(alignment: .leading) {
+                        if let index = progressdetails.estimatedlist?.firstIndex(where: { $0.id == data.id }) {
+                            if progressdetails.estimatedlist?[index].datatosynchronize == false,
+                               progressdetails.estimatedlist?[index].preparedoutputfromrsync?.count ?? 0 > SharedReference.shared.alerttagginglines
+                            {
+                                Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
+                                    .foregroundColor(.yellow)
+                                Text(rsyncUIdata.profile ?? "Default")
+                                    .foregroundColor(.yellow)
+                                    .font(.caption)
+                            } else {
+                                let color: Color = progressdetails.estimatedlist?[index].datatosynchronize == true ? .blue : .red
+                                Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
+                                    .foregroundColor(color)
+                            }
+                        } else {
+                            Text(data.backupID.isEmpty ? "Synchronize ID" : data.backupID)
+                        }
+                    }
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: 150, alignment: .leading)
+
+                    // Action section
+                    Group {
+                        if data.task == SharedReference.shared.halted {
+                            Image(systemName: "stop.fill")
+                                .foregroundColor(.red)
+                        } else {
+                            Text(data.task)
+                        }
+                    }
+                    .frame(width: 80)
+                    .contextMenu {
+                        Button("Toggle halt task") {
+                            let index = getindex(selecteduuids)
+                            guard index != -1 else { return }
+                            updatehalted(index)
+                        }
+                    }
+
+                    // Source folder
+                    Text(data.localCatalog)
+                        .frame(minWidth: 100, maxWidth: 200, alignment: .leading)
+                        .lineLimit(1)
+
+                    // Server
+                    Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
+                        .frame(width: 90)
+
+                    // Time section
+                    let seconds: Double = {
+                        if let date = data.dateRun {
+                            let lastbackup = date.en_date_from_string()
+                            return lastbackup.timeIntervalSinceNow * -1
+                        }
+                        return 0
+                    }()
+                    let color: Color = markconfig(seconds) == true ? .red : (colorScheme == .dark ? .white : .black)
+
+                    Text(seconds.latest())
+                        .frame(width: 90, alignment: .trailing)
+                        .foregroundColor(color)
+                }
+                .padding(.vertical, -4)
+            }
         }
     }
 

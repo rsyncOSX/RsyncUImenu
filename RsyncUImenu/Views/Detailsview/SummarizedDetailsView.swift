@@ -132,88 +132,138 @@ struct SummarizedDetailsView: View {
     }
 
     var leftcolumndetails: some View {
-        List(progressdetails.estimatedlist ?? [],
-             selection: $selecteduuids)
-        { data in
+        VStack(alignment: .leading, spacing: 0) {
+            // Column Headers
             HStack(spacing: 12) {
-                // Synchronize ID section
-                Group {
-                    if data.datatosynchronize {
-                        if data.backupID.isEmpty == true {
-                            Text("Synchronize ID")
-                                .foregroundColor(.blue)
-                        } else {
-                            Text(data.backupID)
-                                .foregroundColor(.blue)
-                        }
-                    } else {
-                        if data.backupID.isEmpty == true {
-                            Text("Synchronize ID")
-                        } else {
-                            Text(data.backupID)
-                        }
-                    }
-                }
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .frame(maxWidth: 150, alignment: .leading)
-
-                // Source folder
-                Text(data.localCatalog)
+                Text("Synchronize ID")
+                    .frame(maxWidth: 150, alignment: .leading)
+                    .font(.headline)
+                
+                Text("Source folder")
                     .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
-                    .lineLimit(1)
-
-                /*
-                 // Server
-                 Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
-                     .frame(maxWidth: 100, alignment: .leading)
-                 */
+                    .font(.headline)
+                
                 Spacer()
             }
-            .padding(.vertical, -4)
+            .padding(.vertical, 4)
+            
+            Divider()
+            
+            // List Content
+            List(progressdetails.estimatedlist ?? [],
+                 selection: $selecteduuids)
+            { data in
+                HStack(spacing: 12) {
+                    // Synchronize ID section
+                    Group {
+                        if data.datatosynchronize {
+                            if data.backupID.isEmpty == true {
+                                Text("Synchronize ID")
+                                    .foregroundColor(.blue)
+                            } else {
+                                Text(data.backupID)
+                                    .foregroundColor(.blue)
+                            }
+                        } else {
+                            if data.backupID.isEmpty == true {
+                                Text("Synchronize ID")
+                            } else {
+                                Text(data.backupID)
+                            }
+                        }
+                    }
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .frame(maxWidth: 150, alignment: .leading)
+
+                    // Source folder
+                    Text(data.localCatalog)
+                        .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
+                        .lineLimit(1)
+
+                    /*
+                     // Server
+                     Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
+                         .frame(maxWidth: 100, alignment: .leading)
+                     */
+                    Spacer()
+                }
+                .padding(.vertical, -4)
+            }
         }
     }
 
     var rightcolumndetails: some View {
-        List(progressdetails.estimatedlist ?? [],
-             selection: $selecteduuids)
-        { files in
+        VStack(alignment: .leading, spacing: 0) {
+            // Column Headers
             HStack(spacing: 8) {
-                // New
-                Text(files.newfiles)
-                    .frame(width: 40, alignment: .trailing)
-                    .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                // Delete
-                Text(files.deletefiles)
-                    .frame(width: 40, alignment: .trailing)
-                    .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                // Updates
-                Text(files.filestransferred)
+                Text("New")
                     .frame(width: 55, alignment: .trailing)
-                    .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                // kB trans
-                Text("\(files.totaltransferredfilessize_Int / 1000)")
+                    .font(.headline)
+                
+                Text("Delete")
+                    .frame(width: 55, alignment: .trailing)
+                    .font(.headline)
+                
+                Text("Updates")
+                    .frame(width: 55, alignment: .trailing)
+                    .font(.headline)
+                
+                Text("kB trans")
                     .frame(width: 80, alignment: .trailing)
-                    .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                // Tot files
-                Text(files.numberoffiles)
+                    .font(.headline)
+                
+                Text("Tot files")
                     .frame(width: 80, alignment: .trailing)
-
-                // Tot kB
-                Text("\(files.totalfilesize_Int / 1000)")
+                    .font(.headline)
+                
+                Text("Tot kB")
                     .frame(width: 80, alignment: .trailing)
-/*
-                // Tot cat
-                Text(files.totaldirectories)
-                    .frame(width: 80, alignment: .trailing)
-*/
+                    .font(.headline)
+                
                 Spacer()
             }
-            .padding(.vertical, -4)
+            .padding(.vertical, 4)
+            
+            Divider()
+            
+            // List Content
+            List(progressdetails.estimatedlist ?? [],
+                 selection: $selecteduuids)
+            { files in
+                HStack(spacing: 8) {
+                    // New
+                    Text(files.newfiles)
+                        .frame(width: 40, alignment: .trailing)
+                        .foregroundColor(files.datatosynchronize ? .blue : nil)
+
+                    // Delete
+                    Text(files.deletefiles)
+                        .frame(width: 40, alignment: .trailing)
+                        .foregroundColor(files.datatosynchronize ? .blue : nil)
+
+                    // Updates
+                    Text(files.filestransferred)
+                        .frame(width: 55, alignment: .trailing)
+                        .foregroundColor(files.datatosynchronize ? .blue : nil)
+
+                    // kB trans
+                    Text("\(files.totaltransferredfilessize_Int / 1000)")
+                        .frame(width: 80, alignment: .trailing)
+                        .foregroundColor(files.datatosynchronize ? .blue : nil)
+
+                    // Tot files
+                    Text(files.numberoffiles)
+                        .frame(width: 80, alignment: .trailing)
+
+                    // Tot kB
+                    Text("\(files.totalfilesize_Int / 1000)")
+                        .frame(width: 80, alignment: .trailing)
+
+                    Spacer()
+                }
+                .padding(.vertical, -4)
+            }
         }
     }
 }
