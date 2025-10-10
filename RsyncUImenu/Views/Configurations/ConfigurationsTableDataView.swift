@@ -39,7 +39,7 @@ struct ConfigurationsTableDataView: View {
                 }
                 .lineLimit(1)
                 .truncationMode(.tail)
-                .frame(maxWidth: 200, alignment: .leading)
+                .frame(maxWidth: 150, alignment: .leading)
 
                 // Action column
                 VStack(alignment: .leading, spacing: 2) {
@@ -64,7 +64,7 @@ struct ConfigurationsTableDataView: View {
                     Text(data.localCatalog)
                         .lineLimit(1)
                 }
-                .frame(minWidth: 80, maxWidth: 300, alignment: .leading)
+                .frame(minWidth: 80, maxWidth: 200, alignment: .leading)
 
                 // Server column
                 VStack(alignment: .leading, spacing: 2) {

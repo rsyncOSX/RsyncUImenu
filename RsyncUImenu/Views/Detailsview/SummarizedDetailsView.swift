@@ -110,7 +110,7 @@ struct SummarizedDetailsView: View {
             if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
                 if estimates.count == 1 {
                     DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: true)
-                        .frame(width: 800, height: 400)
+                        .frame(width: 900, height: 400)
                         .presentationDetents([.height(400)])
                         .presentationBackground(.ultraThinMaterial)
                     // .presentationCornerRadius(8)
@@ -156,11 +156,11 @@ struct SummarizedDetailsView: View {
                 }
                 .lineLimit(1)
                 .truncationMode(.tail)
-                .frame(maxWidth: 200, alignment: .leading)
+                .frame(maxWidth: 150, alignment: .leading)
 
                 // Source folder
                 Text(data.localCatalog)
-                    .frame(minWidth: 100, maxWidth: 200, alignment: .leading)
+                    .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
                     .lineLimit(1)
 
                 /*
@@ -196,7 +196,7 @@ struct SummarizedDetailsView: View {
 
                 // kB trans
                 Text("\(files.totaltransferredfilessize_Int / 1000)")
-                    .frame(width: 60, alignment: .trailing)
+                    .frame(width: 100, alignment: .trailing)
                     .foregroundColor(files.datatosynchronize ? .blue : nil)
 
                 // Tot files

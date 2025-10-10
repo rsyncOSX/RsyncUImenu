@@ -26,7 +26,7 @@ struct DetailsViewHeading: View {
                     .padding(-3)
                     .lineLimit(1)
                     .truncationMode(.tail)
-                    .frame(maxWidth: 200, alignment: .leading)
+                    .frame(maxWidth: 150, alignment: .leading)
 
                     LabeledContent("Task: ") {
                         Text(remotedatanumbers.task)

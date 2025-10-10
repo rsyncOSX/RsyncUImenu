@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     func createWindow() {
         // Create a new window
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 800, height: 400),
+            contentRect: NSRect(x: 0, y: 0, width: 900, height: 400),
             styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered,
             defer: false
@@ -114,7 +114,7 @@ struct ContentView: View {
                 .sheet(isPresented: $showabout) {
                     AboutView()
                 }
-                .frame(width: 800, height: 400)
+                .frame(width: 900, height: 400)
                 .padding()
         }
     }

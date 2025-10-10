@@ -31,9 +31,9 @@ struct ConfigurationsTableDataMainView: View {
                                 .contentTransition(.numericText(countsDown: false))
                                 .animation(.default, value: progress)
                         }
-                        .frame(minWidth: 200, maxWidth: 250, alignment: .leading)
+                        .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
                     } else {
-                        Spacer().frame(width: 200)
+                        Spacer().frame(width: 150)
                     }
                 }
 
@@ -59,7 +59,7 @@ struct ConfigurationsTableDataMainView: View {
                 }
                 .lineLimit(1)
                 .truncationMode(.tail)
-                .frame(maxWidth: 200, alignment: .leading)
+                .frame(maxWidth: 150, alignment: .leading)
 
                 // Action section
                 Group {
@@ -81,7 +81,7 @@ struct ConfigurationsTableDataMainView: View {
 
                 // Source folder
                 Text(data.localCatalog)
-                    .frame(minWidth: 200, maxWidth: 300, alignment: .leading)
+                    .frame(minWidth: 100, maxWidth: 200, alignment: .leading)
                     .lineLimit(1)
 
                 // Server
