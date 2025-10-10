@@ -35,14 +35,14 @@ struct ExecuteNoEstTasksView: View {
                 }
             }
         }
-        .onAppear(perform: {
+        .onAppear {
             executeallnoestimationtasks()
-        })
-        .onDisappear(perform: {
+        }
+        .onDisappear {
             if SharedReference.shared.process != nil {
                 InterruptProcess()
             }
-        })
+        }
         .toolbar(content: {
             ToolbarItem {
                 Button {

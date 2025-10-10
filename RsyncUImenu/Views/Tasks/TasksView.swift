@@ -207,10 +207,10 @@ struct TasksView: View {
     var doubleclickaction: some View {
         Label("", systemImage: "play.fill")
             .foregroundColor(.black)
-            .onAppear(perform: {
+            .onAppear {
                 doubleclickactionfunction()
                 doubleclick = false
-            })
+            }
     }
 }
 

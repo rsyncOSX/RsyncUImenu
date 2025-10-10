@@ -121,9 +121,9 @@ struct SidebarTasksView: View {
             if let estimates = progressdetails.estimatedlist?.filter({ $0.id == selecteduuids.first }) {
                 if estimates.count == 1 {
                     DetailsView(remotedatanumbers: estimates[0], fromsummarizeddetailsview: false)
-                        .onDisappear(perform: {
+                        .onDisappear {
                             selecteduuids.removeAll()
-                        })
+                        }
                 }
             }
         case .completedview:

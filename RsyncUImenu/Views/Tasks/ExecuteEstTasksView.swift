@@ -34,15 +34,15 @@ struct ExecuteEstTasksView: View {
                 maxcount = progressdetails.getmaxcountbytask()
             }
         }
-        .onAppear(perform: {
+        .onAppear {
             executemultipleestimatedtasks()
-        })
-        .onDisappear(perform: {
+        }
+        .onDisappear {
             progressdetails.estimatedlist = nil
             if SharedReference.shared.process != nil {
                 InterruptProcess()
             }
-        })
+        }
         .toolbar(content: {
             ToolbarItem {
                 Button {
