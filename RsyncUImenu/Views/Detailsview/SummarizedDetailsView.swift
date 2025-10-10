@@ -196,21 +196,21 @@ struct SummarizedDetailsView: View {
 
                 // kB trans
                 Text("\(files.totaltransferredfilessize_Int / 1000)")
-                    .frame(width: 100, alignment: .trailing)
+                    .frame(width: 80, alignment: .trailing)
                     .foregroundColor(files.datatosynchronize ? .blue : nil)
 
                 // Tot files
                 Text(files.numberoffiles)
-                    .frame(width: 90, alignment: .trailing)
+                    .frame(width: 80, alignment: .trailing)
 
                 // Tot kB
                 Text("\(files.totalfilesize_Int / 1000)")
                     .frame(width: 80, alignment: .trailing)
-
+/*
                 // Tot cat
                 Text(files.totaldirectories)
-                    .frame(width: 70, alignment: .trailing)
-
+                    .frame(width: 80, alignment: .trailing)
+*/
                 Spacer()
             }
             .padding(.vertical, -4)
