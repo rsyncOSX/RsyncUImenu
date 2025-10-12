@@ -1,6 +1,6 @@
 ## Hi there 👋
 
-Not yet released. 
+**Not yet released.** 
 
 This application is likely a menu-based tool for RsyncUI. While still in its early stages of development, it is not recommended for use yet.
 
