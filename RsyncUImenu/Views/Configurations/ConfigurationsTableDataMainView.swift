@@ -89,6 +89,13 @@ struct ConfigurationsTableDataMainView: View {
             }
             .width(min: 100, max: 200)
             
+            // Source folder column
+            TableColumn("Destination folder") { data in
+                Text(data.offsiteCatalog)
+                    .lineLimit(1)
+            }
+            .width(min: 100, max: 200)
+            
             // Server column
             TableColumn("Server") { data in
                 Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
