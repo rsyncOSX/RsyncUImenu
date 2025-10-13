@@ -132,138 +132,86 @@ struct SummarizedDetailsView: View {
     }
 
     var leftcolumndetails: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Column Headers
-            HStack(spacing: 12) {
-                Text("Synchronize ID")
-                    .frame(maxWidth: 150, alignment: .leading)
-                    .font(.headline)
-                
-                Text("Source folder")
-                    .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
-                    .font(.headline)
-                
-                Spacer()
-            }
-            .padding(.vertical, 4)
-            
-            Divider()
-            
-            // List Content
-            List(progressdetails.estimatedlist ?? [],
-                 selection: $selecteduuids)
-            { data in
-                HStack(spacing: 12) {
-                    // Synchronize ID section
-                    Group {
-                        if data.datatosynchronize {
-                            if data.backupID.isEmpty == true {
-                                Text("Synchronize ID")
-                                    .foregroundColor(.blue)
-                            } else {
-                                Text(data.backupID)
-                                    .foregroundColor(.blue)
-                            }
-                        } else {
-                            if data.backupID.isEmpty == true {
-                                Text("Synchronize ID")
-                            } else {
-                                Text(data.backupID)
-                            }
-                        }
+        Table(progressdetails.estimatedlist ?? [],
+              selection: $selecteduuids)
+        {
+            // Synchronize ID column
+            TableColumn("Synchronize ID") { data in
+                if data.datatosynchronize {
+                    if data.backupID.isEmpty == true {
+                        Text("Synchronize ID")
+                            .foregroundColor(.blue)
+                    } else {
+                        Text(data.backupID)
+                            .foregroundColor(.blue)
                     }
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .frame(maxWidth: 150, alignment: .leading)
-
-                    // Source folder
-                    Text(data.localCatalog)
-                        .frame(minWidth: 100, maxWidth: 150, alignment: .leading)
-                        .lineLimit(1)
-
-                    /*
-                     // Server
-                     Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
-                         .frame(maxWidth: 100, alignment: .leading)
-                     */
-                    Spacer()
+                } else {
+                    if data.backupID.isEmpty == true {
+                        Text("Synchronize ID")
+                    } else {
+                        Text(data.backupID)
+                    }
                 }
-                .padding(.vertical, -4)
             }
+            .width(min: 100, ideal: 150, max: 200)
+            
+            // Source folder column
+            TableColumn("Source folder") { data in
+                Text(data.localCatalog)
+                    .lineLimit(1)
+            }
+            .width(min: 100, ideal: 150, max: 200)
         }
     }
-
     var rightcolumndetails: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Column Headers
-            HStack(spacing: 8) {
-                Text("New")
-                    .frame(width: 55, alignment: .trailing)
-                    .font(.headline)
-                
-                Text("Delete")
-                    .frame(width: 55, alignment: .trailing)
-                    .font(.headline)
-                
-                Text("Updates")
-                    .frame(width: 55, alignment: .trailing)
-                    .font(.headline)
-                
-                Text("kB trans")
-                    .frame(width: 80, alignment: .trailing)
-                    .font(.headline)
-                
-                Text("Tot files")
-                    .frame(width: 80, alignment: .trailing)
-                    .font(.headline)
-                
-                Text("Tot kB")
-                    .frame(width: 80, alignment: .trailing)
-                    .font(.headline)
-                
-                Spacer()
+        Table(progressdetails.estimatedlist ?? [],
+              selection: $selecteduuids)
+        {
+            // New column
+            TableColumn("New") { files in
+                Text(files.newfiles)
+                    .foregroundColor(files.datatosynchronize ? .blue : nil)
             }
-            .padding(.vertical, 4)
+            .width(min: 40, ideal: 55, max: 70)
+            .alignment(.trailing)
             
-            Divider()
-            
-            // List Content
-            List(progressdetails.estimatedlist ?? [],
-                 selection: $selecteduuids)
-            { files in
-                HStack(spacing: 8) {
-                    // New
-                    Text(files.newfiles)
-                        .frame(width: 40, alignment: .trailing)
-                        .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                    // Delete
-                    Text(files.deletefiles)
-                        .frame(width: 40, alignment: .trailing)
-                        .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                    // Updates
-                    Text(files.filestransferred)
-                        .frame(width: 55, alignment: .trailing)
-                        .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                    // kB trans
-                    Text("\(files.totaltransferredfilessize_Int / 1000)")
-                        .frame(width: 80, alignment: .trailing)
-                        .foregroundColor(files.datatosynchronize ? .blue : nil)
-
-                    // Tot files
-                    Text(files.numberoffiles)
-                        .frame(width: 80, alignment: .trailing)
-
-                    // Tot kB
-                    Text("\(files.totalfilesize_Int / 1000)")
-                        .frame(width: 80, alignment: .trailing)
-
-                    Spacer()
-                }
-                .padding(.vertical, -4)
+            // Delete column
+            TableColumn("Delete") { files in
+                Text(files.deletefiles)
+                    .foregroundColor(files.datatosynchronize ? .blue : nil)
             }
+            .width(min: 40, ideal: 55, max: 70)
+            .alignment(.trailing)
+            
+            // Updates column
+            TableColumn("Updates") { files in
+                Text(files.filestransferred)
+                    .foregroundColor(files.datatosynchronize ? .blue : nil)
+            }
+            .width(min: 50, ideal: 55, max: 80)
+            .alignment(.trailing)
+            
+            // kB trans column
+            TableColumn("kB trans") { files in
+                Text("\(files.totaltransferredfilessize_Int / 1000)")
+                    .foregroundColor(files.datatosynchronize ? .blue : nil)
+            }
+            .width(min: 70, ideal: 80, max: 100)
+            .alignment(.trailing)
+            
+            // Tot files column
+            TableColumn("Tot files") { files in
+                Text(files.numberoffiles)
+            }
+            .width(min: 70, ideal: 80, max: 100)
+            .alignment(.trailing)
+            
+            // Tot kB column
+            TableColumn("Tot kB") { files in
+                Text("\(files.totalfilesize_Int / 1000)")
+            }
+            .width(min: 70, ideal: 80, max: 100)
+            .alignment(.trailing)
         }
     }
 }
