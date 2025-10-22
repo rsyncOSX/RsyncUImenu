@@ -87,7 +87,7 @@ struct ConfigurationsTableDataMainView: View {
                 Text(data.localCatalog)
                     .lineLimit(1)
             }
-            .width(min: 100, max: 200)
+            .width(min: 250, max: 350)
             
             // Source folder column
             TableColumn("Destination folder") { data in
