@@ -29,11 +29,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem?.button {
-            let image = NSImage(systemSymbolName: "cloud.fill", accessibilityDescription: "RsyncUI menu app")
-            let darkRed = NSColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
-            let config = NSImage.SymbolConfiguration(paletteColors: [darkRed])
-            button.image = image?.withSymbolConfiguration(config)
-            button.image?.isTemplate = false
+            button.image = NSImage(systemSymbolName: "cloud.fill", accessibilityDescription: "Menu Bar App")
+            // let image = NSImage(systemSymbolName: "cloud.fill", accessibilityDescription: "RsyncUI menu app")
+            // let darkRed = NSColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            // let config = NSImage.SymbolConfiguration(paletteColors: [darkRed])
+            // button.image = image?.withSymbolConfiguration(config)
+            // button.image?.isTemplate = false
             button.action = #selector(toggleWindow)
         }
 
