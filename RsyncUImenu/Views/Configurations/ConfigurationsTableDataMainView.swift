@@ -22,18 +22,40 @@ struct ConfigurationsTableDataMainView: View {
         Table(configurations, selection: $selecteduuids) {
             // Progress column (conditional)
             if synchronizatioofdatainprogress {
-                TableColumn("Progress") { data in
+                TableColumn("%") { data in
                     if data.hiddenID == progressdetails.hiddenIDatwork, max > 0, progress <= max {
-                        HStack {
-                            ProgressView("", value: progress, total: max)
-                                .frame(width: 50)
-                            Text("\(Int(max)) : \(Int(progress))")
-                                .contentTransition(.numericText(countsDown: false))
-                                .animation(.default, value: progress)
+                        HStack(spacing: 8) {
+                            // Progress bar with percentage overlay
+                            ZStack(alignment: .leading) {
+                                ProgressView(value: progress, total: max)
+                                    .frame(width: 80)
+                                    .scaleEffect(y: 1.5, anchor: .center)
+
+                                // Optional: Show percentage inside/over the progress bar
+                                Text("\(Int((progress / max) * 100))%")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity)
+                            }
+
+                            // Compact ratio display
+                            HStack(spacing: 4) {
+                                Text("\(Int(progress))")
+                                    .contentTransition(.numericText(countsDown: false))
+                                    .animation(.default, value: progress)
+
+                                Text("/")
+                                    .foregroundStyle(.secondary)
+
+                                Text("\(Int(max))")
+                                    .foregroundStyle(.secondary)
+                            }
+                            .font(.system(.body, design: .monospaced))
                         }
+                        .padding(.vertical, 4)
                     }
                 }
-                .width(min: 100, max: 150)
+                .width(min: 150, max: 250)
             }
             
             // Synchronize ID column
