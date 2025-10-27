@@ -57,20 +57,31 @@ struct AboutView: View {
 
             Section {
                 HStack {
-                    Button {
+                    ConditionalGlassButton(
+                        systemImage: "doc.plaintext",
+                        text: "Changelog",
+                        helpText: "Changelog"
+                    ) {
                         openchangelog()
                         dismiss()
-                    } label: {
-                        Image(systemName: "doc.plaintext")
                     }
-                    .buttonStyle(ColorfulButtonStyle())
 
                     Spacer()
 
-                    Button("Dismiss") {
-                        dismiss()
+                    Spacer()
+
+                    if #available(macOS 26.0, *) {
+                        Button("Close", role: .close) {
+                            dismiss()
+                        }
+                        .buttonStyle(RefinedGlassButtonStyle())
+
+                    } else {
+                        Button("Close") {
+                            dismiss()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(ColorfulButtonStyle())
                 }
 
             } header: {

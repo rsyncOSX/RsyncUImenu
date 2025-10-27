@@ -48,41 +48,64 @@ struct SummarizedDetailsView: View {
                             rightcolumndetails
                         }
 
-                        if datatosynchronize, selecteduuids.count == 0 {
+                        if datatosynchronize {
                             if SharedReference.shared.confirmexecute {
-                                Button {
-                                    isPresentingConfirm = progressdetails.confirmexecutetasks()
-                                    if isPresentingConfirm == false {
-                                        executetaskpath.removeAll()
-                                        executetaskpath.append(Tasks(task: .executestimatedview))
+                                // Because of the role .destructive keep the if #available(macOS 26.0, *)
+                                if #available(macOS 26.0, *) {
+                                    Button(action: {
+                                        isPresentingConfirm = progressdetails.confirmexecutetasks()
+                                        if isPresentingConfirm == false {
+                                            executetaskpath.removeAll()
+                                            executetaskpath.append(Tasks(task: .executestimatedview))
+                                        }
+
+                                    }) {
+                                        Image(systemName: "play.fill")
                                     }
-                                } label: {
-                                    Text(Image(systemName: "play.fill"))
-                                        .font(.title2)
-                                        .imageScale(.large)
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .help("Synchronize (⌘R)")
-                                .confirmationDialog("Synchronize tasks?",
-                                                    isPresented: $isPresentingConfirm)
-                                {
-                                    Button("Synchronize", role: .destructive) {
-                                        executetaskpath.removeAll()
-                                        executetaskpath.append(Tasks(task: .executestimatedview))
+                                    .buttonStyle(RefinedGlassButtonStyle())
+                                    .help("Synchronize")
+                                    .confirmationDialog("Synchronize tasks?",
+                                                        isPresented: $isPresentingConfirm)
+                                    {
+                                        Button("Synchronize", role: .destructive) {
+                                            executetaskpath.removeAll()
+                                            executetaskpath.append(Tasks(task: .executestimatedview))
+                                        }
+                                    }
+
+                                } else {
+                                    Button {
+                                        isPresentingConfirm = progressdetails.confirmexecutetasks()
+                                        if isPresentingConfirm == false {
+                                            executetaskpath.removeAll()
+                                            executetaskpath.append(Tasks(task: .executestimatedview))
+                                        }
+                                    } label: {
+                                        Text(Image(systemName: "play.fill"))
+                                            // .foregroundColor(.blue)
+                                            .font(.title2)
+                                            .imageScale(.large)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .help("Synchronize")
+                                    .confirmationDialog("Synchronize tasks?",
+                                                        isPresented: $isPresentingConfirm)
+                                    {
+                                        Button("Synchronize", role: .destructive) {
+                                            executetaskpath.removeAll()
+                                            executetaskpath.append(Tasks(task: .executestimatedview))
+                                        }
                                     }
                                 }
 
                             } else {
-                                Button {
+                                ConditionalGlassButton(
+                                    systemImage: "play.fill",
+                                    helpText: "Synchronize"
+                                ) {
                                     executetaskpath.removeAll()
                                     executetaskpath.append(Tasks(task: .executestimatedview))
-                                } label: {
-                                    Text(Image(systemName: "play.fill"))
-                                        .imageScale(.large)
-                                        .font(.title2)
                                 }
-                                .help("Synchronize (⌘R)")
-                                .buttonStyle(.borderedProminent)
                             }
                         }
                     }

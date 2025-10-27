@@ -96,8 +96,11 @@ struct TasksView: View {
             .frame(width: 180)
             // .padding([.bottom, .top, .trailing], 7)
             .disabled(selectprofiles)
-
-            Button {
+            
+            ConditionalGlassButton(
+                systemImage: "wand.and.stars",
+                helpText: "Estimate (⌘E)"
+            ) {
                 guard SharedReference.shared.norsync == false else { return }
                 guard alltasksarehalted() == false else { return }
                 // This only applies if one task is selected and that task is halted
@@ -114,13 +117,12 @@ struct TasksView: View {
                 }
 
                 executetaskpath.append(Tasks(task: .summarizeddetailsview))
-            } label: {
-                Image(systemName: "wand.and.stars")
-                    .foregroundColor(Color(.blue))
             }
-            .help("Estimate (⌘E)")
 
-            Button {
+            ConditionalGlassButton(
+                systemImage: "play.fill",
+                helpText: "Synchronize (⌘R)"
+            ) {
                 guard SharedReference.shared.norsync == false else { return }
                 guard alltasksarehalted() == false else { return }
                 // This only applies if one task is selected and that task is halted
@@ -143,26 +145,21 @@ struct TasksView: View {
                 } else {
                     execute()
                 }
-            } label: {
-                Image(systemName: "play.fill")
-                    .foregroundColor(Color(.blue))
             }
-            .help("Synchronize (⌘R)")
-
-            Button {
+            
+            ConditionalGlassButton(
+                systemImage: "clear",
+                helpText: "Reset estimates"
+            ) {
                 selecteduuids.removeAll()
                 reset()
-            } label: {
-                if thereareestimates == true {
-                    Image(systemName: "clear")
-                        .foregroundColor(Color(.red))
-                } else {
-                    Image(systemName: "clear")
-                }
             }
-            .help("Reset estimates")
+            
 
-            Button {
+            ConditionalGlassButton(
+                systemImage: "text.magnifyingglass",
+                helpText: "Rsync output estimated task"
+            ) {
                 guard selecteduuids.count > 0 else { return }
                 guard alltasksarehalted() == false else { return }
 
@@ -175,30 +172,43 @@ struct TasksView: View {
                 } else {
                     executetaskpath.append(Tasks(task: .onetaskdetailsview))
                 }
-            } label: {
-                Image(systemName: "text.magnifyingglass")
             }
-            .help("Rsync output estimated task")
-
-            Button {
+            
+            ConditionalGlassButton(
+                systemImage: "doc.plaintext",
+                helpText: "View logfile"
+            ) {
                 executetaskpath.append(Tasks(task: .viewlogfile))
-            } label: {
-                Image(systemName: "doc.plaintext")
             }
-            .help("View logfile")
-
-            Button {
+            
+            ConditionalGlassButton(
+                systemImage: "chart.bar.fill",
+                helpText: "Charts"
+            ) {
                 executetaskpath.append(Tasks(task: .charts))
-            } label: {
-                Image(systemName: "chart.bar.fill")
             }
-            .help("Charts")
             .disabled(selecteduuids.count != 1 || selectedconfig?.task == SharedReference.shared.syncremote)
-
+            
+           
             Spacer()
-
-            Button("Quit") {
-                NSApplication.shared.terminate(nil)
+            
+            if #available(macOS 26.0, *) {
+               
+                    Button("Quit", role: .close) {
+                        NSApplication.shared.terminate(nil)
+                    }
+                    .buttonStyle(RefinedGlassButtonStyle())
+              
+            } else {
+                
+                    Button {
+                        NSApplication.shared.terminate(nil)
+                    } label: {
+                        Image(systemName: "Quit")
+                    }
+                    .help("Close")
+                    .buttonStyle(.borderedProminent)
+                
             }
         }
         .navigationTitle("Synchronize: profile \(rsyncUIdata.profile ?? "Default")")
