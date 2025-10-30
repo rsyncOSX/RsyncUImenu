@@ -1,6 +1,6 @@
 //
 //  ProcessRsyncVer3x.swift
-//  RsyncUImenu
+//  RsyncUI
 //
 //  Created by Thomas Evensen on 03/08/2025.
 //
@@ -37,7 +37,7 @@ final class ProcessRsyncVer3x {
     // rsync = "Number of files" at start of last line nr 16
     // openrsync = "Number of files" at start of last line nr 14
     var beginningofsummarizedstatus: Bool = false
-    // When RsyncUImenu starts or version of rsync is changed
+    // When RsyncUI starts or version of rsync is changed
     // the arguments is only one and contains ["--version"] only
     var getrsyncversion: Bool = false
 
@@ -71,14 +71,22 @@ final class ProcessRsyncVer3x {
                     await self.datahandle(pipe)
                 }
             }
+            // Final drain - keep reading until no more data
+            while pipe.fileHandleForReading.availableData.count > 0 {
+                Logger.process.info("ProcessRsyncVer3x: sequenceFileHandlerTask - drain remaining data")
+                if self.getrsyncversion == true {
+                    await self.datahandlersyncversion(pipe)
+                } else {
+                    await self.datahandle(pipe)
+                }
+            }
         }
 
         sequenceTerminationTask = Task {
             for await _ in sequencetermination {
-                Task {
-                    try await Task.sleep(seconds: 0.5)
-                    await self.termination()
-                }
+                // Small delay to let final data arrive
+                try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                await self.termination()
             }
         }
 
@@ -241,6 +249,6 @@ extension ProcessRsyncVer3x {
         sequenceFileHandlerTask?.cancel()
         sequenceTerminationTask?.cancel()
 
-        Logger.process.info("ProcessRsyncVer3x: process = nil and termination discovered \(Thread.isMain) but on \(Thread.current)")
+        Logger.process.info("ProcessRsyncVer3x: process = nil and termination discovered \(Thread.isMain, privacy: .public) but on \(Thread.current, privacy: .public)")
     }
 }
