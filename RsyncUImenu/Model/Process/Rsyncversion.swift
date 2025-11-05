@@ -8,10 +8,30 @@
 import Foundation
 import Observation
 import OSLog
+import RsyncProcess
 
 @Observable @MainActor
 final class Rsyncversion {
     func getrsyncversion() {
+        let handlers = ProcessHandlers(
+            processtermination: processtermination,
+            filehandler: { _ in
+                Logger.process.info("ProcessRsync: You should not SEE this message")
+            },
+            rsyncpath: GetfullpathforRsync().rsyncpath,
+            checklineforerror: TrimOutputFromRsync().checkforrsyncerror,
+            updateprocess: SharedReference.shared.updateprocess,
+            propogateerror: { error in
+                SharedReference.shared.errorobject?.alert(error: error)
+            },
+            logger: { command, output in
+                _ = await ActorLogToFile(command, output)
+            },
+            checkforerrorinrsyncoutput: SharedReference.shared.checkforerrorinrsyncoutput,
+            rsyncversion3: SharedReference.shared.rsyncversion3,
+            environment: MyEnvironment()?.environment
+        )
+
         do {
             try SetandValidatepathforrsync().validatelocalpathforrsync()
         } catch {
@@ -19,9 +39,15 @@ final class Rsyncversion {
             SharedReference.shared.rsyncversionshort = "No valid rsync deteced"
         }
         if SharedReference.shared.norsync == false {
-            let command = ProcessRsyncVer3x(arguments: ["--version"],
-                                            processtermination: processtermination)
-            command.executeProcess()
+            let process = ProcessRsync(arguments: ["--version"],
+                                       handlers: handlers,
+                                       filehandler: false)
+            do {
+                try process.executeProcess()
+            } catch let e {
+                let error = e
+                SharedReference.shared.errorobject?.alert(error: error)
+            }
         }
     }
 

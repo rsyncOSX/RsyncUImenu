@@ -8,6 +8,8 @@
 import Foundation
 import Observation
 import SwiftUI
+import RsyncProcess
+import OSLog
 
 struct OneTaskDetailsView: View {
     @Bindable var progressdetails: ProgressDetails
@@ -52,16 +54,38 @@ struct OneTaskDetailsView: View {
                 .argumentssynchronize(dryRun: true, forDisplay: false)
             guard arguments != nil else { return }
 
-            if SharedReference.shared.rsyncversion3 {
-                let process = ProcessRsyncVer3x(arguments: arguments,
-                                                config: selectedconfig,
-                                                processtermination: processtermination)
-                process.executeProcess()
-            } else {
-                let process = ProcessRsyncOpenrsync(arguments: arguments,
-                                                    config: selectedconfig,
-                                                    processtermination: processtermination)
-                process.executeProcess()
+            let handlers = ProcessHandlers(
+                processtermination: processtermination,
+                filehandler: { _ in
+                    Logger.process.info("ProcessRsync: You should not SEE this message")
+                },
+                rsyncpath: GetfullpathforRsync().rsyncpath,
+                checklineforerror: TrimOutputFromRsync().checkforrsyncerror,
+                updateprocess: SharedReference.shared.updateprocess,
+                propogateerror: { error in
+                    SharedReference.shared.errorobject?.alert(error: error)
+                },
+                logger: { command, output in
+                    _ = await ActorLogToFile(command, output)
+                },
+                checkforerrorinrsyncoutput: SharedReference.shared.checkforerrorinrsyncoutput,
+                rsyncversion3: SharedReference.shared.rsyncversion3,
+                environment: MyEnvironment()?.environment
+            )
+            // Must check valid rsync exists
+            guard SharedReference.shared.norsync == false else { return }
+            guard selectedconfig?.task != SharedReference.shared.halted else { return }
+
+            let process = ProcessRsync(arguments: arguments,
+                                       hiddenID: selectedconfig?.hiddenID ?? -1,
+                                       handlers: handlers,
+                                       usefilehandler: false)
+
+            do {
+                try process.executeProcess()
+            } catch let e {
+                let error = e
+                SharedReference.shared.errorobject?.alert(error: error)
             }
         }
     }

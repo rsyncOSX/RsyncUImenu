@@ -187,7 +187,7 @@ actor ActorLogToFile {
     }
 
     @discardableResult
-    init(command: String, stringoutputfromrsync: [String]?) async {
+    init(_ command: String, _ stringoutputfromrsync: [String]?) async {
         if let stringoutputfromrsync {
             await minimumlogging(command: command, stringoutputfromrsync: stringoutputfromrsync)
         }

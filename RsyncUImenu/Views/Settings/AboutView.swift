@@ -10,6 +10,8 @@ import SwiftUI
 struct AboutView: View {
     @Environment(\.dismiss) var dismiss
 
+    @State private var urlstring = ""
+
     var changelog: String {
         Resources().getResource(resource: .changelog)
     }
@@ -33,7 +35,7 @@ struct AboutView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("RsyncUI menu app")
+            Section(header: Text("RsyncUI")
                 .font(.title3)
                 .fontWeight(.bold))
             {
@@ -65,8 +67,6 @@ struct AboutView: View {
                         openchangelog()
                         dismiss()
                     }
-
-                    Spacer()
 
                     Spacer()
 
@@ -113,5 +113,11 @@ struct AboutView: View {
 extension AboutView {
     func openchangelog() {
         NSWorkspace.shared.open(URL(string: changelog)!)
+    }
+
+    func opendownload() {
+        if urlstring.isEmpty == false {
+            NSWorkspace.shared.open(URL(string: urlstring)!)
+        }
     }
 }

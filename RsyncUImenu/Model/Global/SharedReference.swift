@@ -8,6 +8,7 @@
 
 import Foundation
 import Observation
+import OSLog
 
 public extension Thread {
     static var isMain: Bool { isMainThread }
@@ -79,4 +80,14 @@ final class SharedReference {
     @ObservationIgnored var hideverifyremotefunction: Bool = true
     // Hide Calendar function in main Sidebar
     @ObservationIgnored var hideschedule: Bool = true
+    
+    func updateprocess(_ task: Process?) {
+        if task != nil {
+            Logger.process.info("SharedReference: Process set to ACTIVE")
+            process = task
+        } else {
+            Logger.process.info("SharedReference: Process set to NIL")
+            process = nil
+        }
+    }
 }
