@@ -25,10 +25,10 @@ actor ActorLogChartsData {
     @concurrent
     nonisolated func parselogrecords(from logrecords: [Log]) async -> [LogEntry] {
         // "resultExecuted": "43 files : 0.73 MB in 0.49 seconds"
-        Logger.process.info("ActorLogChartsData: parselogrecords() MAIN THREAD: \(Thread.isMain) but on \(Thread.current)")
+        Logger.process.info("ActorLogChartsData: parselogrecords() MAIN THREAD: \(Thread.isMain, privacy: .public) but on \(Thread.current, privacy: .public)")
         Logger.process.info("ActorLogChartsData: number of records \(logrecords.count, privacy: .public)")
         // return logrecords.compactMap { logrecord in
-        return logrecords.map { logrecord in
+        return logrecords.compactMap { logrecord in
             let numbers = extractnumbersasdoubles(from: logrecord.resultExecuted ?? "")
 
             // Snapshot task
@@ -41,7 +41,7 @@ actor ActorLogChartsData {
                                 transferredMB: size,
                                 seconds: seconds)
                 // Synchronize task
-            } else {
+            } else if numbers.count ==  3 {
                 let files = numbers[0]
                 let size = numbers[1]
                 let seconds = numbers[2]
@@ -49,6 +49,8 @@ actor ActorLogChartsData {
                                 files: Int(files),
                                 transferredMB: size,
                                 seconds: seconds)
+            } else {
+                return nil
             }
         }
     }
