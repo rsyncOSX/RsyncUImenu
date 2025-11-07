@@ -16,6 +16,9 @@ struct YourApp: App {
         Settings {
             EmptyView()
         }
+        .commands {
+            ExecuteCommands()
+        }
     }
 }
 

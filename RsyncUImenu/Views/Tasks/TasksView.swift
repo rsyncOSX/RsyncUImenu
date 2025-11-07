@@ -33,6 +33,11 @@ struct TasksView: View {
     @State private var thereareestimates: Bool = false
     //
     @State private var selectprofiles: Bool = true
+    
+    // Focus buttons
+    @State private var focusstartestimation: Bool = false
+    @State private var focusstartexecution: Bool = false
+    @State private var showquicktask: Bool = false
 
     var body: some View {
         HStack {
@@ -50,6 +55,9 @@ struct TasksView: View {
                     selectprofiles = false
                 }
             }
+            .focusedSceneValue(\.startestimation, $focusstartestimation)
+            .focusedSceneValue(\.startexecution, $focusstartexecution)
+            .focusedSceneValue(\.showquicktask, $showquicktask)
             .frame(maxWidth: .infinity)
             .onChange(of: selecteduuids) {
                 if let configurations = rsyncUIdata.configurations {
@@ -79,7 +87,11 @@ struct TasksView: View {
             }
             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
 
-            if doubleclick { doubleclickaction }
+            Group {
+                if doubleclick { doubleclickaction }
+                if focusstartestimation { labelstartestimation }
+                if focusstartexecution { labelstartexecution }
+            }
         }
 
         Spacer()
@@ -156,45 +168,48 @@ struct TasksView: View {
             }
             
 
-            ConditionalGlassButton(
-                systemImage: "text.magnifyingglass",
-                helpText: "Rsync output estimated task"
-            ) {
-                guard selecteduuids.count > 0 else { return }
-                guard alltasksarehalted() == false else { return }
+            if showquicktask {
+                ConditionalGlassButton(
+                    systemImage: "text.magnifyingglass",
+                    helpText: "Rsync output estimated task"
+                ) {
+                    guard selecteduuids.count > 0 else { return }
+                    guard alltasksarehalted() == false else { return }
 
-                guard selecteduuids.count == 1 else {
-                    executetaskpath.append(Tasks(task: .summarizeddetailsview))
-                    return
-                }
-                
-                if selecteduuids.count == 1 {
-                    guard selectedconfig?.task != SharedReference.shared.halted else {
+                    guard selecteduuids.count == 1 else {
+                        executetaskpath.append(Tasks(task: .summarizeddetailsview))
                         return
+                    }
+                    
+                    if selecteduuids.count == 1 {
+                        guard selectedconfig?.task != SharedReference.shared.halted else {
+                            return
+                        }
+                    }
+                    
+                    if progressdetails.tasksareestimated(selecteduuids) {
+                        executetaskpath.append(Tasks(task: .dryrunonetaskalreadyestimated))
+                    } else {
+                        executetaskpath.append(Tasks(task: .onetaskdetailsview))
                     }
                 }
                 
-                if progressdetails.tasksareestimated(selecteduuids) {
-                    executetaskpath.append(Tasks(task: .dryrunonetaskalreadyestimated))
-                } else {
-                    executetaskpath.append(Tasks(task: .onetaskdetailsview))
+                ConditionalGlassButton(
+                    systemImage: "doc.plaintext",
+                    helpText: "View logfile"
+                ) {
+                    executetaskpath.append(Tasks(task: .viewlogfile))
                 }
+                
+                ConditionalGlassButton(
+                    systemImage: "chart.bar.fill",
+                    helpText: "Charts"
+                ) {
+                    executetaskpath.append(Tasks(task: .charts))
+                }
+                .disabled(selecteduuids.count != 1 || selectedconfig?.task == SharedReference.shared.syncremote)
+                
             }
-            
-            ConditionalGlassButton(
-                systemImage: "doc.plaintext",
-                helpText: "View logfile"
-            ) {
-                executetaskpath.append(Tasks(task: .viewlogfile))
-            }
-            
-            ConditionalGlassButton(
-                systemImage: "chart.bar.fill",
-                helpText: "Charts"
-            ) {
-                executetaskpath.append(Tasks(task: .charts))
-            }
-            .disabled(selecteduuids.count != 1 || selectedconfig?.task == SharedReference.shared.syncremote)
             
            
             Spacer()
@@ -227,6 +242,24 @@ struct TasksView: View {
             .onAppear {
                 doubleclickactionfunction()
                 doubleclick = false
+            }
+    }
+    
+    var labelstartestimation: some View {
+        Label("", systemImage: "play.fill")
+            .foregroundColor(.black)
+            .onAppear {
+                executetaskpath.append(Tasks(task: .summarizeddetailsview))
+                focusstartestimation = false
+            }
+    }
+
+    var labelstartexecution: some View {
+        Label("", systemImage: "play.fill")
+            .foregroundColor(.black)
+            .onAppear {
+                execute()
+                focusstartexecution = false
             }
     }
 }
