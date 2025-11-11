@@ -76,7 +76,7 @@ struct OneTaskDetailsView: View {
             guard SharedReference.shared.norsync == false else { return }
             guard selectedconfig?.task != SharedReference.shared.halted else { return }
 
-            let process = ProcessRsync(arguments: arguments,
+            let process = RsyncProcess(arguments: arguments,
                                        hiddenID: selectedconfig?.hiddenID ?? -1,
                                        handlers: handlers,
                                        usefilehandler: false)

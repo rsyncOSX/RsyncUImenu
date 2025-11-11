@@ -39,7 +39,7 @@ final class Rsyncversion {
             SharedReference.shared.rsyncversionshort = "No valid rsync deteced"
         }
         if SharedReference.shared.norsync == false {
-            let process = ProcessRsync(arguments: ["--version"],
+            let process = RsyncProcess(arguments: ["--version"],
                                        handlers: handlers,
                                        filehandler: false)
             do {
