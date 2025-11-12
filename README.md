@@ -8,4 +8,4 @@ The primary objective of this application is to create a lightweight tool that r
 
 The initial version of the application serves as a simple and user-friendly synchronization tool.
 
-
+![](images/ver02.png)
