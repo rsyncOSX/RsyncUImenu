@@ -1,8 +1,8 @@
 ## Hi there 👋
 
-**Not yet released.** 
+**Released as beta.** 
 
-This application is likely a menu-based tool for RsyncUI. While still in its early stages of development, it is not recommended for use yet.
+This application is a menu-based app for RsyncUI. 
 
 The primary objective of this application is to create a lightweight tool that resides in the menu bar and provides easy access for synchronizing data. Currently, the application does not offer task management capabilities within the menu app. Additionally, it does not support scheduling or URL links at this time of development.
 
