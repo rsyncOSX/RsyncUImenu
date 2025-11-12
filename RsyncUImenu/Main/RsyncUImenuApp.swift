@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             defer: false
         )
 
-        window.title = "Second Window"
+        window.title = "All output"
 
         // Position it offset from main window
         if let mainFrame = mainWindow?.frame {
@@ -93,8 +93,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         window.isReleasedWhenClosed = false
         window.contentViewController = NSHostingController(rootView:
-            SecondWindowView()
-                .frame(width: 500, height: 400))
+            AlloutputView()
+                .frame(minWidth: 600, minHeight: 400))
         window.delegate = self
 
         secondWindow = window
@@ -177,17 +177,25 @@ struct ContentView: View {
                 HStack {
                     Text("RsyncUI menu app")
                         .font(.headline)
+                    
                     Spacer()
-
-                    Button("About") {
-                        onOpenAbout() // Open about window instead of sheet
+                    
+                    ConditionalGlassButton(
+                        systemImage: "info",
+                        text: "About",
+                        helpText: "About view"
+                    ) {
+                        onOpenAbout()
                     }
-                    .buttonStyle(.plain)
-
-                    Button("Open Second Window") {
+                    
+                    ConditionalGlassButton(
+                        systemImage: "text.document",
+                        text: "Output",
+                        helpText: "Rsync output"
+                    ) {
                         onOpenSecondWindow()
                     }
-                    .buttonStyle(.plain)
+
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
@@ -200,35 +208,6 @@ struct ContentView: View {
                 .frame(width: 900, height: 400)
                 .padding()
         }
-    }
-}
-
-// Example second window view
-struct SecondWindowView: View {
-    @Environment(\.dismiss) var dismiss
-
-    var body: some View {
-        VStack {
-            Text("This is the second window")
-                .font(.title)
-            Text("You can put any content here")
-                .foregroundColor(.secondary)
-
-            if #available(macOS 26.0, *) {
-                Button("Close", role: .close) {
-                    dismiss()
-                }
-                .buttonStyle(RefinedGlassButtonStyle())
-
-            } else {
-                Button("Close") {
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
     }
 }
 

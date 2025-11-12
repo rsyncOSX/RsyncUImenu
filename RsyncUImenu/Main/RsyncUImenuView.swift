@@ -7,6 +7,7 @@
 
 import OSLog
 import SwiftUI
+import RsyncProcess
 
 struct RsyncUImenuView: View {
     @Binding var executetaskpath: [Tasks]
@@ -25,13 +26,16 @@ struct RsyncUImenuView: View {
         }
         .task {
             guard rsyncUIdata.configurations == nil else { return }
-
+            
+            await RsyncOutputCapture.shared.enable()
+            // Or with file output:
+            // let logURL = FileManager.default.temporaryDirectory.appendingPathComponent("rsync-output.log")
+            // await RsyncOutputCapture.shared.enable(writeToFile: logURL)
+            
             Homepath().createrootprofilecatalog()
-
             ReadUserConfigurationJSON().readuserconfiguration()
             // Get version of rsync
             rsyncversion.getrsyncversion()
-
             rsyncUIdata.configurations = await ActorReadSynchronizeConfigurationJSON()
                 .readjsonfilesynchronizeconfigurations(nil,
                                                        SharedReference.shared.rsyncversion3,
