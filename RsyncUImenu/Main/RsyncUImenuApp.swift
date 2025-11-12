@@ -177,9 +177,9 @@ struct ContentView: View {
                 HStack {
                     Text("RsyncUI menu app")
                         .font(.headline)
-                    
+
                     Spacer()
-                    
+
                     ConditionalGlassButton(
                         systemImage: "info",
                         text: "About",
@@ -187,7 +187,7 @@ struct ContentView: View {
                     ) {
                         onOpenAbout()
                     }
-                    
+
                     ConditionalGlassButton(
                         systemImage: "text.document",
                         text: "Output",
@@ -195,7 +195,6 @@ struct ContentView: View {
                     ) {
                         onOpenSecondWindow()
                     }
-
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

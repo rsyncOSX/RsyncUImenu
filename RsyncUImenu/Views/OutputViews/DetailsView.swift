@@ -49,14 +49,13 @@ struct DetailsView: View {
                     }
 
                     if fromsummarizeddetailsview {
-                        Button {
+                        ConditionalGlassButton(
+                            systemImage: "return",
+                            text: "Return",
+                            helpText: "Return"
+                        ) {
                             dismiss()
-                        } label: {
-                            Image(systemName: "return")
                         }
-                        .help("Return")
-                        .buttonStyle(.borderedProminent)
-                        .padding()
                     }
                 }
                 .padding()
