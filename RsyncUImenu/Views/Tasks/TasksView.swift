@@ -33,7 +33,7 @@ struct TasksView: View {
     @State private var thereareestimates: Bool = false
     //
     @State private var selectprofiles: Bool = true
-    
+
     // Focus buttons
     @State private var focusstartestimation: Bool = false
     @State private var focusstartexecution: Bool = false
@@ -108,7 +108,7 @@ struct TasksView: View {
             .frame(width: 180)
             // .padding([.bottom, .top, .trailing], 7)
             .disabled(selectprofiles)
-            
+
             ConditionalGlassButton(
                 systemImage: "wand.and.stars",
                 helpText: "Estimate (⌘E)"
@@ -158,7 +158,7 @@ struct TasksView: View {
                     execute()
                 }
             }
-            
+
             ConditionalGlassButton(
                 systemImage: "clear",
                 helpText: "Reset estimates"
@@ -166,7 +166,6 @@ struct TasksView: View {
                 selecteduuids.removeAll()
                 reset()
             }
-            
 
             if showquicktask {
                 ConditionalGlassButton(
@@ -180,27 +179,27 @@ struct TasksView: View {
                         executetaskpath.append(Tasks(task: .summarizeddetailsview))
                         return
                     }
-                    
+
                     if selecteduuids.count == 1 {
                         guard selectedconfig?.task != SharedReference.shared.halted else {
                             return
                         }
                     }
-                    
+
                     if progressdetails.tasksareestimated(selecteduuids) {
                         executetaskpath.append(Tasks(task: .dryrunonetaskalreadyestimated))
                     } else {
                         executetaskpath.append(Tasks(task: .onetaskdetailsview))
                     }
                 }
-                
+
                 ConditionalGlassButton(
                     systemImage: "doc.plaintext",
                     helpText: "View logfile"
                 ) {
                     executetaskpath.append(Tasks(task: .viewlogfile))
                 }
-                
+
                 ConditionalGlassButton(
                     systemImage: "chart.bar.fill",
                     helpText: "Charts"
@@ -208,29 +207,24 @@ struct TasksView: View {
                     executetaskpath.append(Tasks(task: .charts))
                 }
                 .disabled(selecteduuids.count != 1 || selectedconfig?.task == SharedReference.shared.syncremote)
-                
             }
-            
-           
+
             Spacer()
-            
+
             if #available(macOS 26.0, *) {
-               
-                    Button("Quit", role: .close) {
-                        NSApplication.shared.terminate(nil)
-                    }
-                    .buttonStyle(RefinedGlassButtonStyle())
-              
+                Button("Quit", role: .close) {
+                    NSApplication.shared.terminate(nil)
+                }
+                .buttonStyle(RefinedGlassButtonStyle())
+
             } else {
-                
-                    Button {
-                        NSApplication.shared.terminate(nil)
-                    } label: {
-                        Image(systemName: "Quit")
-                    }
-                    .help("Close")
-                    .buttonStyle(.borderedProminent)
-                
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Image(systemName: "Quit")
+                }
+                .help("Close")
+                .buttonStyle(.borderedProminent)
             }
         }
         .navigationTitle("Synchronize: profile \(rsyncUIdata.profile ?? "Default")")
@@ -244,7 +238,7 @@ struct TasksView: View {
                 doubleclick = false
             }
     }
-    
+
     var labelstartestimation: some View {
         Label("", systemImage: "play.fill")
             .foregroundColor(.black)

@@ -33,7 +33,7 @@ struct ConfigurationsTableDataView: View {
                 }
             }
             .width(min: 100, ideal: 150, max: 200)
-            
+
             // Action column
             TableColumn("Action") { data in
                 if data.task == SharedReference.shared.halted {
@@ -44,14 +44,14 @@ struct ConfigurationsTableDataView: View {
                 }
             }
             .width(min: 60, ideal: 80, max: 100)
-            
+
             // Source folder column
             TableColumn("Source folder") { data in
                 Text(data.localCatalog)
                     .lineLimit(1)
             }
             .width(min: 80, ideal: 150, max: 250)
-            
+
             // Server column
             TableColumn("Server") { data in
                 if data.offsiteServer.count > 0 {

@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
-
 @available(macOS 26.0, *)
 private extension Color {
     @MainActor static var glassBorderLight = Color.white.opacity(0.35)

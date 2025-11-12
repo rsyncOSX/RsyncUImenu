@@ -177,7 +177,7 @@ struct SummarizedDetailsView: View {
                 }
             }
             .width(min: 100, ideal: 150, max: 200)
-            
+
             // Source folder column
             TableColumn("Source folder") { data in
                 Text(data.localCatalog)
@@ -186,6 +186,7 @@ struct SummarizedDetailsView: View {
             .width(min: 100, ideal: 150, max: 200)
         }
     }
+
     var rightcolumndetails: some View {
         Table(progressdetails.estimatedlist ?? [],
               selection: $selecteduuids)
@@ -197,7 +198,7 @@ struct SummarizedDetailsView: View {
             }
             .width(min: 40, ideal: 55, max: 70)
             .alignment(.trailing)
-            
+
             // Delete column
             TableColumn("Delete") { files in
                 Text(files.deletefiles)
@@ -205,7 +206,7 @@ struct SummarizedDetailsView: View {
             }
             .width(min: 40, ideal: 55, max: 70)
             .alignment(.trailing)
-            
+
             // Updates column
             TableColumn("Updates") { files in
                 Text(files.filestransferred)
@@ -213,7 +214,7 @@ struct SummarizedDetailsView: View {
             }
             .width(min: 50, ideal: 55, max: 80)
             .alignment(.trailing)
-            
+
             // kB trans column
             TableColumn("kB trans") { files in
                 Text("\(files.totaltransferredfilessize_Int / 1000)")
@@ -221,14 +222,14 @@ struct SummarizedDetailsView: View {
             }
             .width(min: 70, ideal: 80, max: 100)
             .alignment(.trailing)
-            
+
             // Tot files column
             TableColumn("Tot files") { files in
                 Text(files.numberoffiles)
             }
             .width(min: 70, ideal: 80, max: 100)
             .alignment(.trailing)
-            
+
             // Tot kB column
             TableColumn("Tot kB") { files in
                 Text("\(files.totalfilesize_Int / 1000)")

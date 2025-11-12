@@ -80,7 +80,7 @@ final class SharedReference {
     @ObservationIgnored var hideverifyremotefunction: Bool = true
     // Hide Calendar function in main Sidebar
     @ObservationIgnored var hideschedule: Bool = true
-    
+
     func updateprocess(_ task: Process?) {
         if task != nil {
             Logger.process.info("SharedReference: Process set to ACTIVE")

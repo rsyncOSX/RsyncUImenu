@@ -7,9 +7,9 @@
 
 import Foundation
 import Observation
-import SwiftUI
-import RsyncProcess
 import OSLog
+import RsyncProcess
+import SwiftUI
 
 struct OneTaskDetailsView: View {
     @Bindable var progressdetails: ProgressDetails

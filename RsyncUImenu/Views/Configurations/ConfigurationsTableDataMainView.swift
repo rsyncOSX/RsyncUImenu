@@ -57,7 +57,7 @@ struct ConfigurationsTableDataMainView: View {
                 }
                 .width(min: 150, max: 250)
             }
-            
+
             // Synchronize ID column
             TableColumn("Synchronize ID") { data in
                 VStack(alignment: .leading) {
@@ -83,7 +83,7 @@ struct ConfigurationsTableDataMainView: View {
                 .truncationMode(.tail)
             }
             .width(max: 150)
-            
+
             // Task column
             TableColumn("Task") { data in
                 Group {
@@ -103,27 +103,27 @@ struct ConfigurationsTableDataMainView: View {
                 }
             }
             .width(80)
-            
+
             // Source folder column
             TableColumn("Source folder") { data in
                 Text(data.localCatalog)
                     .lineLimit(1)
             }
             .width(min: 250, max: 350)
-            
+
             // Source folder column
             TableColumn("Destination folder") { data in
                 Text(data.offsiteCatalog)
                     .lineLimit(1)
             }
             .width(min: 100, max: 200)
-            
+
             // Server column
             TableColumn("Server") { data in
                 Text(data.offsiteServer.count > 0 ? data.offsiteServer : "localhost")
             }
             .width(90)
-            
+
             // Time column
             TableColumn("Time") { data in
                 let seconds: Double = {
@@ -134,7 +134,7 @@ struct ConfigurationsTableDataMainView: View {
                     return 0
                 }()
                 let color: Color = markconfig(seconds) == true ? .red : (colorScheme == .dark ? .white : .black)
-                
+
                 Text(seconds.latest())
                     .foregroundColor(color)
             }

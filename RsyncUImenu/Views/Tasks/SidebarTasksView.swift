@@ -34,7 +34,6 @@ struct SidebarTasksView: View {
         VStack(spacing: 0) {
             // Custom navigation bar - show if we have navigation
             if let currentTask = executetaskpath.last {
-                
                 HStack {
                     ConditionalGlassButton(
                         systemImage: "chevron.left",
@@ -44,7 +43,7 @@ struct SidebarTasksView: View {
                         executetaskpath.removeLast()
                     }
                     .padding(5)
-                    
+
                     Spacer()
 
                     Text(navigationTitle(for: currentTask))
