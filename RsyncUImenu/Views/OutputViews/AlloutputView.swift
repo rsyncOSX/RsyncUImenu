@@ -7,41 +7,31 @@
 
 import SwiftUI
 import RsyncProcess
+import Observation
 
-// Example second window view
 struct AlloutputView: View {
-    @Environment(\.dismiss) var dismiss
-    @State private var output: [LogfileRecords] = []
+    // The generated observable model from @Observable should be usable as an observable object here.
+    // Using @ObservedObject to reference the shared singleton.
+    @State private var model = PrintLines.shared
 
     var body: some View {
-        VStack {
-            Table(output) {
-                TableColumn("Ouput from Rsync") { data in
-                    Text(data.line)
+        NavigationView {
+            List(model.output, id: \.self) { line in
+                Text(line)
+                    .font(.system(.caption, design: .monospaced))
+                    .lineLimit(1)
+                    .frame(minWidth: .infinity)
+            }
+            .navigationTitle("Rsync Output")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Clear") {
+                        Task { @MainActor in
+                            // model.clear()
+                        }
+                    }
                 }
             }
-
-            if #available(macOS 26.0, *) {
-                Button("Close", role: .close) {
-                    dismiss()
-                }
-                .buttonStyle(RefinedGlassButtonStyle())
-
-            } else {
-                Button("Close") {
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-        .task {
-            // Load lines asynchronously from the actor on appearance
-            let allLines = await RsyncOutputCapture.shared.getAllLines()
-            self.output = allLines.map({ line in
-                LogfileRecords(line: line)
-            })
         }
     }
 }
