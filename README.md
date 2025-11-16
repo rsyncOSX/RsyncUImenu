@@ -1,5 +1,3 @@
 ## Hi there 👋
 
-Not released, this is more likely a test project to get some experience what a menu-based version of RsyncUI is like. The application does not offer task management capabilities within the menu app. Additionally, it does not support scheduling or URL links at this time of development.
-
-![](images/ver02.png)
+At present, this project has been archived. It served as a test, demonstrating functionality, but its practical application is unlikely for myself or others.
